@@ -4,9 +4,18 @@ import { Configuration, OpenAIApi } from "openai";
 
 function Dialogue() {
   const [prompt, setPrompt] = useState("");
+  const [messageList, setMessageList] = useState<Message[]>([]);
 
   function updatePrompt(event: ChangeEvent<HTMLInputElement>) {
     setPrompt(event.target.value);
+  }
+
+  function userMessage(text: string) {
+    const newMessage: Message = {
+      sender: "user",
+      text: text,
+    };
+    setMessageList((prevMessage) => [...prevMessage, newMessage]);
   }
 
   return (
@@ -23,10 +32,19 @@ function Dialogue() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
-          onClick={() => console.log(prompt)}
+          onClick={() => userMessage(prompt)}
         >
-          Click
+          Send
         </button>
+      </div>
+      <div>
+        {messageList.map((message: Message) => (
+          <div key={message.sender}>
+            <div>
+              {message.sender}: {message.text}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
