@@ -1,2 +1,2 @@
-# chattychatty
+# Chatty Chatty
 This is a friendly chatty
