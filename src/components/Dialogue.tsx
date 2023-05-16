@@ -4,7 +4,6 @@ import { Configuration, OpenAIApi } from "openai";
 
 function Dialogue() {
   const [prompt, setPrompt] = useState("");
-  const;
 
   function updatePrompt(event: ChangeEvent<HTMLInputElement>) {
     setPrompt(event.target.value);
