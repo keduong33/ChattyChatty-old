@@ -10,7 +10,7 @@ function Dialogue() {
     setPrompt(event.target.value);
   }
 
-  function userMessage(text: string) {
+  function sendUserMessage(text: string) {
     const newMessage: Message = {
       sender: "user",
       text: text,
@@ -32,7 +32,7 @@ function Dialogue() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
-          onClick={() => userMessage(prompt)}
+          onClick={() => sendUserMessage(prompt)}
         >
           Send
         </button>
