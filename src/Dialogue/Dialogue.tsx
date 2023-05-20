@@ -18,9 +18,19 @@ function Dialogue() {
 
     const openai = ApiConfigure();
 
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: `${text}`,
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a sarcastic person. Answer everything sarcastically",
+        },
+        {
+          role: "user",
+          content: `${text}`,
+        },
+      ],
       temperature: 0.9,
       max_tokens: 50,
       top_p: 1,
@@ -28,7 +38,7 @@ function Dialogue() {
       presence_penalty: 0.6,
     });
 
-    console.log(response.data.choices[0].text);
+    console.log(response.data.choices[0].message);
   }
 
   return (
