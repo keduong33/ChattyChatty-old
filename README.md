@@ -1,7 +1,9 @@
 # Chatty Chatty
+
 This is a friendly chatty
 
 # Installation
+
 `npm install`
 
-- Create an .env and supply `API_KEY`
+- Create an secrets.tsx and supply `API_KEY`
