@@ -2,8 +2,30 @@
 
 This is a friendly chatty
 
-# Installation
+## Installation
+
+Use NodeJS version 20 if possible
+
+`nvm use 20`
+
+Install the dependencies 
 
 `npm install`
 
-- Create an secrets.tsx and supply `API_KEY`
+Create an secrets.ts and supply `API_KEY` from OpenAI
+
+```typescript
+export function getAPIKEY() {
+    return "API_KEY HERE";
+  }
+```
+
+## Usage
+
+Dev
+
+`npm run dev`
+
+Build
+
+`npm run build`
