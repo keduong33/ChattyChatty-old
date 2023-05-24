@@ -12,7 +12,7 @@ Install the dependencies
 
 `npm install`
 
-Create an secrets.ts and supply `API_KEY` from OpenAI
+Create an src/Dialogue/commons/secrets.ts and supply `API_KEY` from OpenAI
 
 ```typescript
 export function getAPIKEY() {
