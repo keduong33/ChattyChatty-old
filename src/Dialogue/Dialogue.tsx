@@ -49,7 +49,8 @@ function Dialogue() {
     setMessageList((prevMessage) => [...prevMessage, botMessage]);
     // setHistory(history + "," + text); //history concat --> not sure proper way yet
 
-    console.log(messageList[messageList.length - 1]?.text);
+    // console.log(messageList[messageList.length - 1]?.text);
+    console.log(response.data.usage);
   }
 
   return (
@@ -66,7 +67,10 @@ function Dialogue() {
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
-          onClick={() => sendUserMessage(prompt)}
+          onClick={() => {
+            sendUserMessage(prompt);
+            setPrompt("");
+          }}
         >
           Send
         </button>
