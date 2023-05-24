@@ -4,6 +4,7 @@ import ApiConfigure from "./commons/ApiConfigure";
 function Dialogue() {
   const [prompt, setPrompt] = useState("");
   const [messageList, setMessageList] = useState<Message[]>([]);
+  const [history, setHistory] = useState("");
 
   function updatePrompt(event: ChangeEvent<HTMLInputElement>) {
     setPrompt(event.target.value);
@@ -11,6 +12,7 @@ function Dialogue() {
 
   async function sendUserMessage(text: string) {
     const newMessage: Message = {
+      id: messageList.length,
       sender: "user",
       text: text,
     };
@@ -24,7 +26,7 @@ function Dialogue() {
         {
           role: "system",
           content:
-            "You are a sarcastic person. Answer everything sarcastically",
+            "You are my German language teacher. I only speak English and am practicing my German. You are gonna ask me what sentence that I want to translate and then translate that sentence into German.",
         },
         {
           role: "user",
@@ -38,7 +40,16 @@ function Dialogue() {
       presence_penalty: 0.6,
     });
 
-    console.log(response.data.choices[0].message);
+    const apiResponse = response.data.choices[0].message?.content || "";
+    const botMessage: Message = {
+      id: messageList.length,
+      sender: "bot",
+      text: apiResponse,
+    };
+    setMessageList((prevMessage) => [...prevMessage, botMessage]);
+    // setHistory(history + "," + text); //history concat --> not sure proper way yet
+
+    console.log(messageList[messageList.length - 1]?.text);
   }
 
   return (
@@ -61,8 +72,8 @@ function Dialogue() {
         </button>
       </div>
       <div>
-        {messageList.map((message: Message) => (
-          <div key={message.sender}>
+        {messageList.map((message: Message, i) => (
+          <div key={i}>
             <div>
               {message.sender}: {message.text}
             </div>
