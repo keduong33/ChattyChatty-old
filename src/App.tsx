@@ -1,4 +1,4 @@
-import Dialogue from "./Dialogue/Dialogue";
+import Dialogue from "./ui/Dialogue";
 
 function App() {
   return <Dialogue />;

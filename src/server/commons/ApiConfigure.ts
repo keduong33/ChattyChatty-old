@@ -1,5 +1,4 @@
 import { Configuration, OpenAIApi } from "openai";
-import * as dotenv from "dotenv";
 import { getAPIKEY } from "./secrets";
 
 export default function ApiConfigure(): OpenAIApi {
