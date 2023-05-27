@@ -1,4 +1,4 @@
-type messageModal = {
+export type messageModal = {
   sender: "user" | "bot";
   content: string;
 };

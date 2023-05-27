@@ -1,11 +1,12 @@
-import ApiConfigure from "../commons/ApiConfigure";
+import apiConfigure from "../api/apiConfigure";
+import { messageModal } from "../modals/messageModal";
 
 export async function sendUserMessage(
   userMessage: messageModal,
   language: string
 ) {
   try {
-    const openai = ApiConfigure();
+    const openai = apiConfigure();
 
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -40,7 +41,7 @@ export async function sendUserMessage(
 }
 
 export async function sendInitialMessage(language: string) {
-  const openai = ApiConfigure();
+  const openai = apiConfigure();
 
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",

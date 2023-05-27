@@ -1,7 +1,7 @@
 import { Configuration, OpenAIApi } from "openai";
-import { getAPIKEY } from "./secrets";
+import { getAPIKEY } from "../commons/secrets";
 
-export default function ApiConfigure(): OpenAIApi {
+export default function apiConfigure(): OpenAIApi {
   const configuration = new Configuration({
     apiKey: getAPIKEY(),
   });

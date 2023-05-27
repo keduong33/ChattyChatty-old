@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
 } from "../server/Dialogue/Dialogue";
-export default Dialogue;
+import { messageModal } from "../server/modals/messageModal";
 
-function Dialogue() {
+export function Dialogue() {
   const [text, setText] = useState("");
   const [messageList, setMessageList] = useState<messageModal[]>([]);
   const language = "Vietnamese";
