@@ -9,9 +9,11 @@ import React from "react";
 export function Dialogue() {
   const [text, setText] = useState("");
   const [messageList, setMessageList] = useState<messageModal[]>([]);
+  const [loading, setLoading] = useState(true);
   const language = "Vietnamese";
 
   async function handleOnClick() {
+    setLoading(true);
     const userMessage: messageModal = {
       sender: "user",
       content: text,
@@ -21,12 +23,16 @@ export function Dialogue() {
     if (aiMessage) setMessageList((prevMessage) => [...prevMessage, aiMessage]);
     else console.log("Something wrong backend");
     setText("");
+    setLoading(false);
   }
 
+  /* TODO: Uncomment this for a complete app */
   window.onload = async () => {
+    setLoading(true);
     const aiMessage = await sendInitialMessage(language);
     if (aiMessage) setMessageList([aiMessage]);
     else console.log("Bad");
+    setLoading(false);
   };
 
   return (
@@ -58,6 +64,7 @@ export function Dialogue() {
             </div>
           </div>
         ))}
+        {loading && <div>Bot Typing...</div>}
       </div>
     </div>
   );
