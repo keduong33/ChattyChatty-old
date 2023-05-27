@@ -1,16 +1,32 @@
 import { ChangeEvent, useState } from "react";
-import { sendUserMessage } from "../server/Dialogue/Dialogue";
+import {
+  sendInitialMessage,
+  sendUserMessage,
+} from "../server/Dialogue/Dialogue";
 export default Dialogue;
 
 function Dialogue() {
   const [text, setText] = useState("");
   const [messageList, setMessageList] = useState<messageModal[]>([]);
+  const language = "Vietnamese";
 
   async function handleOnClick() {
-    const [userMessage, aiMessage] = await sendUserMessage(text);
-    setMessageList((prevMessage) => [...prevMessage, userMessage, aiMessage]);
+    const userMessage: messageModal = {
+      sender: "user",
+      content: text,
+    };
+    setMessageList((prevMessage) => [...prevMessage, userMessage]);
+    const aiMessage = await sendUserMessage(userMessage, language);
+    if (aiMessage) setMessageList((prevMessage) => [...prevMessage, aiMessage]);
+    else console.log("Something wrong backend");
     setText("");
   }
+
+  window.onload = async () => {
+    const aiMessage = await sendInitialMessage(language);
+    setMessageList([aiMessage]);
+    console.log("run");
+  };
 
   return (
     <div>
