@@ -1,70 +1,76 @@
+import axios from "axios";
 import apiConfigure from "../api/apiConfigure";
 import { messageModal } from "../modals/messageModal";
-
+const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 export async function sendUserMessage(
   userMessage: messageModal,
   language: string
 ) {
   try {
-    const openai = apiConfigure();
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: `You are my ${language} language teacher. I only speak English and am practicing my ${language}. You are gonna translate my sentence into ${language}.`,
+    const response = await axios.post(
+      apiEndpoint,
+      {
+        messages: [
+          {
+            role: "system",
+            content: `You are my ${language} language teacher. I only speak English and am practicing my ${language}. Translate my sentence into ${language}.`,
+          },
+          { role: "user", content: `${userMessage.content}` },
+        ],
+        model: "gpt-3.5-turbo",
+        temperature: 0.9,
+        max_tokens: 50,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0.6,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
-        {
-          role: "user",
-          content: `${userMessage.content}`,
-        },
-      ],
-      temperature: 0.9,
-      max_tokens: 50,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0.6,
-    });
+      }
+    );
 
-    const apiResponse = response.data.choices[0].message?.content || "";
+    const reply = response.data.choices[0].message.content;
     const aiMessage: messageModal = {
       sender: "bot",
-      content: apiResponse,
+      content: reply,
     };
-
-    // console.log(response.data.usage);
     return aiMessage;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error("Error: ", error);
   }
 }
 
 export async function sendInitialMessage(language: string) {
-  const openai = apiConfigure();
   try {
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "user",
-          content: `Translate into ${language} and make it casual: I'm Chatty Chatty. Ask me any question`,
+    const response = await axios.post(
+      apiEndpoint,
+      {
+        messages: [
+          {
+            role: "system",
+            content: `(friendly) Translate I'm Chatty Chatty. Ask me any question into ${language}`,
+          },
+        ],
+        model: "gpt-3.5-turbo",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
         },
-      ],
-      temperature: 0.9,
-      max_tokens: 50,
-      top_p: 1,
-      frequency_penalty: 0,
-      presence_penalty: 0.6,
-    });
+      }
+    );
 
-    const apiResponse = response.data.choices[0].message?.content || "";
+    const reply = response.data.choices[0].message.content;
     const aiMessage: messageModal = {
       sender: "bot",
-      content: apiResponse,
+      content: reply,
     };
-
     return aiMessage;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.error("Error:", error);
   }
 }
