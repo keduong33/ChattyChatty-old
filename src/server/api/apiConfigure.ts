@@ -1,9 +1,8 @@
 import { Configuration, OpenAIApi } from "openai";
-import { getAPIKEY } from "../commons/secrets";
 
 export default function apiConfigure(): OpenAIApi {
   const configuration = new Configuration({
-    apiKey: getAPIKEY(),
+    apiKey: import.meta.env.VITE_API_KEY,
   });
 
   const openai = new OpenAIApi(configuration);

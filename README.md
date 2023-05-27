@@ -8,16 +8,14 @@ Use NodeJS version 20 if possible
 
 `nvm use 20`
 
-Install the dependencies 
+Install the dependencies
 
 `npm install`
 
-Create an src/Dialogue/commons/secrets.ts and supply `API_KEY` from OpenAI
+Create an .env in the root and supply `API_KEY` from OpenAI
 
 ```typescript
-export function getAPIKEY() {
-    return "API_KEY HERE";
-  }
+VITE_API_KEY=YOUR_API_KEY
 ```
 
 ## Usage

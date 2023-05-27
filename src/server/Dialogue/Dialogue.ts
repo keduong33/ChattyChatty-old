@@ -7,7 +7,6 @@ export async function sendUserMessage(
 ) {
   try {
     const openai = apiConfigure();
-
     const response = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: [
@@ -42,27 +41,30 @@ export async function sendUserMessage(
 
 export async function sendInitialMessage(language: string) {
   const openai = apiConfigure();
+  try {
+    const response = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "user",
+          content: `Translate into ${language} and make it casual: I'm Chatty Chatty. Ask me any question`,
+        },
+      ],
+      temperature: 0.9,
+      max_tokens: 50,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0.6,
+    });
 
-  const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "user",
-        content: `Translate into ${language} and make it casual: I'm Chatty Chatty. Ask me any question`,
-      },
-    ],
-    temperature: 0.9,
-    max_tokens: 50,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0.6,
-  });
+    const apiResponse = response.data.choices[0].message?.content || "";
+    const aiMessage: messageModal = {
+      sender: "bot",
+      content: apiResponse,
+    };
 
-  const apiResponse = response.data.choices[0].message?.content || "";
-  const aiMessage: messageModal = {
-    sender: "bot",
-    content: apiResponse,
-  };
-
-  return aiMessage;
+    return aiMessage;
+  } catch (e) {
+    console.log(e);
+  }
 }

@@ -2,8 +2,9 @@ import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
-} from "../server/Dialogue/Dialogue";
+} from "../server/dialogue/Dialogue";
 import { messageModal } from "../server/modals/messageModal";
+import React from "react";
 
 export function Dialogue() {
   const [text, setText] = useState("");
@@ -24,8 +25,8 @@ export function Dialogue() {
 
   window.onload = async () => {
     const aiMessage = await sendInitialMessage(language);
-    setMessageList([aiMessage]);
-    console.log("run");
+    if (aiMessage) setMessageList([aiMessage]);
+    else console.log("Bad");
   };
 
   return (
