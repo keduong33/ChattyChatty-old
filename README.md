@@ -18,6 +18,12 @@ Create an .env in the root and supply `API_KEY` from OpenAI
 VITE_API_KEY=YOUR_API_KEY
 ```
 
+Create `responsiveVoiceAPI.js` in /src/server/api
+
+Download the JS file from: https://code.responsivevoice.org/responsivevoice.js?key=KEY
+
+Copy that in and read the [docs](https://responsivevoice.org/api/)
+
 ## Usage
 
 Dev
