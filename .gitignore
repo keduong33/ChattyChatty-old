@@ -25,4 +25,6 @@ dist-ssr
 *.sw?
 .env
 
+# Secret Files
 secrets.ts*
+responsivevoiceAPI.js
