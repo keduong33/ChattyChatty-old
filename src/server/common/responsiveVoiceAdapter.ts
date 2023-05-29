@@ -1,5 +1,9 @@
 import { TLanguage } from "../models/types";
 
-export function speak(content: string, language: TLanguage) {
-  responsiveVoice.speak(content, `${language} Male`);
+export function AISpeak(content: string, language: TLanguage) {
+  try {
+    responsiveVoice.speak(content, `${language} Male`);
+  } catch (e) {
+    console.error("Error", e);
+  }
 }

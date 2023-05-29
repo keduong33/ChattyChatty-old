@@ -5,7 +5,7 @@ import {
 } from "../server/dialogue/Dialogue";
 import { messageModel } from "../server/models/messageModel";
 import React from "react";
-import { speak } from "../server/common/responsiveVoiceAdapter";
+import { AISpeak } from "../server/common/responsiveVoiceAdapter";
 import { TLanguage } from "../server/models/types";
 
 export function Dialogue() {
@@ -22,8 +22,10 @@ export function Dialogue() {
     };
     setMessageList((prevMessage) => [...prevMessage, userMessage]);
     const aiMessage = await sendUserMessage(userMessage, language);
-    if (aiMessage) setMessageList((prevMessage) => [...prevMessage, aiMessage]);
-    else console.log("Something wrong backend");
+    if (aiMessage) {
+      AISpeak(aiMessage.content, language);
+      setMessageList((prevMessage) => [...prevMessage, aiMessage]);
+    } else console.log("Something wrong backend");
     setText("");
     setLoading(false);
   }
