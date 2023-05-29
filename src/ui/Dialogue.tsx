@@ -31,6 +31,7 @@ export function Dialogue() {
   }
 
   /* TODO: Uncomment this for a complete app */
+  /* TODO: Add AISpeak to the initial Message */
   // window.onload = async () => {
   //   setLoading(true);
   //   const aiMessage = await sendInitialMessage(language);
@@ -40,6 +41,8 @@ export function Dialogue() {
   //   } else console.log("Uh oh something bad");
   //   setLoading(false);
   // };
+
+  /* TODO: Add Language Picker (prolly a component itself) */
 
   return (
     <div>
