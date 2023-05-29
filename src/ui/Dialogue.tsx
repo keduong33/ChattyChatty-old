@@ -3,18 +3,20 @@ import {
   sendInitialMessage,
   sendUserMessage,
 } from "../server/dialogue/Dialogue";
-import { messageModal } from "../server/modals/messageModal";
+import { messageModel } from "../server/models/messageModel";
 import React from "react";
+import { speak } from "../server/common/responsiveVoiceAdapter";
+import { TLanguage } from "../server/models/types";
 
 export function Dialogue() {
   const [text, setText] = useState("");
-  const [messageList, setMessageList] = useState<messageModal[]>([]);
+  const [messageList, setMessageList] = useState<messageModel[]>([]);
   const [loading, setLoading] = useState(true);
-  const language = "Vietnamese";
+  const language: TLanguage = "Deutsch";
 
   async function handleOnClick() {
     setLoading(true);
-    const userMessage: messageModal = {
+    const userMessage: messageModel = {
       sender: "user",
       content: text,
     };
@@ -27,13 +29,15 @@ export function Dialogue() {
   }
 
   /* TODO: Uncomment this for a complete app */
-  window.onload = async () => {
-    setLoading(true);
-    const aiMessage = await sendInitialMessage(language);
-    if (aiMessage) setMessageList([aiMessage]);
-    else console.log("Bad");
-    setLoading(false);
-  };
+  // window.onload = async () => {
+  //   setLoading(true);
+  //   const aiMessage = await sendInitialMessage(language);
+  //   if (aiMessage) {
+  //     speak(aiMessage.content, language);
+  //     setMessageList([aiMessage]);
+  //   } else console.log("Uh oh something bad");
+  //   setLoading(false);
+  // };
 
   return (
     <div>
@@ -57,7 +61,7 @@ export function Dialogue() {
         </button>
       </div>
       <div>
-        {messageList.map((message: messageModal, i) => (
+        {messageList.map((message: messageModel, i) => (
           <div key={i}>
             <div>
               {message.sender}: {message.content}
@@ -66,6 +70,7 @@ export function Dialogue() {
         ))}
         {loading && <div>Bot Typing...</div>}
       </div>
+      <div></div>
     </div>
   );
 }

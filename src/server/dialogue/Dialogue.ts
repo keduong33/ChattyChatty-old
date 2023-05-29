@@ -1,9 +1,9 @@
 import axios from "axios";
 import apiConfigure from "../api/apiConfigure";
-import { messageModal } from "../modals/messageModal";
+import { messageModel } from "../models/messageModel";
 const apiEndpoint = "https://api.openai.com/v1/chat/completions";
 export async function sendUserMessage(
-  userMessage: messageModal,
+  userMessage: messageModel,
   language: string
 ) {
   try {
@@ -33,7 +33,7 @@ export async function sendUserMessage(
     );
 
     const reply = response.data.choices[0].message.content;
-    const aiMessage: messageModal = {
+    const aiMessage: messageModel = {
       sender: "bot",
       content: reply,
     };
@@ -65,7 +65,7 @@ export async function sendInitialMessage(language: string) {
     );
 
     const reply = response.data.choices[0].message.content;
-    const aiMessage: messageModal = {
+    const aiMessage: messageModel = {
       sender: "bot",
       content: reply,
     };
