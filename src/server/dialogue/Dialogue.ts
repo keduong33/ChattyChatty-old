@@ -1,76 +1,80 @@
-import axios from "axios";
-import apiConfigure from "../api/apiConfigure";
+import axios, { AxiosResponse } from "axios";
 import { messageModel } from "../models/messageModel";
-const apiEndpoint = "https://api.openai.com/v1/chat/completions";
+import { AXIOS_OPENAI_HEADER } from "../common/config";
+import {
+  createInitialOpenAiSystemMessage,
+  createNewMessage,
+  createOpenAiSystemMessage,
+} from "../common/functions";
+import { TLanguage } from "../models/types";
+import {
+  OPENAI_API_ENDPOINT,
+  OPENAI_MODEL_NAME,
+  OPENAI_MODEL_MAX_TOKEN,
+  OPENAI_MODEL_TEMPERATURE,
+  OPENAI_MODEL_TOP_P,
+  OPENAI_MODEL_FREQUENCY_PENALTY,
+  OPENAI_PRESENCE_PENALTY,
+} from "../api/openAIAPI";
+import { getResponseContent } from "../handlers/axiosHandler";
+
 export async function sendUserMessage(
   userMessage: messageModel,
-  language: string
+  language: TLanguage
 ) {
   try {
     const response = await axios.post(
-      apiEndpoint,
+      OPENAI_API_ENDPOINT,
       {
         messages: [
-          {
-            role: "system",
-            content: `You are my ${language} language teacher. I only speak English and am practicing my ${language}. Translate my sentence into ${language}.`,
-          },
+          createOpenAiSystemMessage(language),
           { role: "user", content: `${userMessage.content}` },
         ],
-        model: "gpt-3.5-turbo",
-        temperature: 0.9,
-        max_tokens: 50,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0.6,
+        model: OPENAI_MODEL_NAME,
+        temperature: OPENAI_MODEL_TEMPERATURE,
+        max_tokens: OPENAI_MODEL_MAX_TOKEN,
+        top_p: OPENAI_MODEL_TOP_P,
+        frequency_penalty: OPENAI_MODEL_FREQUENCY_PENALTY,
+        presence_penalty: OPENAI_PRESENCE_PENALTY,
       },
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-        },
+        headers: AXIOS_OPENAI_HEADER,
       }
     );
-
-    const reply = response.data.choices[0].message.content;
-    const aiMessage: messageModel = {
-      sender: "bot",
-      content: reply,
-    };
-    return aiMessage;
+    const aiMessage = createAiMessage(response);
+    if (aiMessage) return aiMessage;
+    throw Error("No reply from OpenAI API");
   } catch (error) {
     console.error("Error: ", error);
   }
 }
 
-export async function sendInitialMessage(language: string) {
+export async function sendInitialMessage(language: TLanguage) {
   try {
     const response = await axios.post(
-      apiEndpoint,
+      OPENAI_API_ENDPOINT,
       {
-        messages: [
-          {
-            role: "system",
-            content: `(friendly) Translate I'm Chatty Chatty. Ask me any question into ${language}`,
-          },
-        ],
-        model: "gpt-3.5-turbo",
+        messages: [createInitialOpenAiSystemMessage(language)],
+        model: OPENAI_MODEL_NAME,
       },
       {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`,
-        },
+        headers: AXIOS_OPENAI_HEADER,
       }
     );
 
-    const reply = response.data.choices[0].message.content;
-    const aiMessage: messageModel = {
-      sender: "bot",
-      content: reply,
-    };
-    return aiMessage;
+    const aiMessage = createAiMessage(response);
+    if (aiMessage) return aiMessage;
+    throw Error("No reply from OpenAI API");
   } catch (error) {
     console.error("Error:", error);
   }
+}
+
+function createAiMessage(response: AxiosResponse): messageModel | undefined {
+  const reply = getResponseContent(response);
+  if (reply) {
+    const aiMessage: messageModel = createNewMessage("bot", reply);
+    return aiMessage;
+  }
+  return undefined;
 }

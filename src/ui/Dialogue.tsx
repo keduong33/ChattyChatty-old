@@ -2,11 +2,12 @@ import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
-} from "../server/dialogue/Dialogue";
+} from "../server/dialogue/dialogue";
 import { messageModel } from "../server/models/messageModel";
 import React from "react";
 import { AISpeak } from "../server/common/responsiveVoiceAdapter";
 import { TLanguage } from "../server/models/types";
+import { createNewMessage } from "../server/common/functions";
 
 export function Dialogue() {
   const [text, setText] = useState("");
@@ -16,16 +17,16 @@ export function Dialogue() {
 
   async function handleOnClick() {
     setLoading(true);
-    const userMessage: messageModel = {
-      sender: "user",
-      content: text,
-    };
+
+    const userMessage: messageModel = createNewMessage("user", text);
     setMessageList((prevMessage) => [...prevMessage, userMessage]);
     const aiMessage = await sendUserMessage(userMessage, language);
+
     if (aiMessage) {
       AISpeak(aiMessage.content, language);
       setMessageList((prevMessage) => [...prevMessage, aiMessage]);
     } else console.log("Something wrong backend");
+
     setText("");
     setLoading(false);
   }
