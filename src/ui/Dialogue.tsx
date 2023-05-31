@@ -76,7 +76,28 @@ export function Dialogue() {
         ))}
         {loading && <div>Bot Typing...</div>}
       </div>
-      <div></div>
+      {/*TODO: Setup voice recording*/}
+      <div>
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
+          type="button"
+          onClick={() => {
+            // handleOnClick();
+          }}
+        >
+          Record
+        </button>
+        <button
+          disabled
+          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit disabled:opacity-40"
+          type="button"
+          onClick={() => {
+            // handleOnClick();
+          }}
+        >
+          Stop
+        </button>
+      </div>
     </div>
   );
 }
