@@ -15,7 +15,7 @@ export function Dialogue() {
   const [loading, setLoading] = useState(true);
   const language: TLanguage = "Deutsch";
 
-  async function handleOnClick() {
+  async function handleSendButtonClick() {
     setLoading(true);
 
     const userMessage: messageModel = createNewMessage("user", text);
@@ -60,7 +60,7 @@ export function Dialogue() {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
           onClick={() => {
-            handleOnClick();
+            handleSendButtonClick();
           }}
         >
           Send
