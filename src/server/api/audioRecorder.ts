@@ -3,6 +3,7 @@ export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined;
   private recordedChunks: Blob[] = [];
   private speech: Blob | undefined;
+  private text = "";
 
   private handleSuccess = (stream: MediaStream) => {
     this.mediaStream = stream;
@@ -28,7 +29,7 @@ export class AudioRecorder {
   };
 
   private saveSpeech() {
-    this.speech = new Blob(this.recordedChunks, { type: "audio/webm" });
+    this.speech = new Blob(this.recordedChunks, { type: "audio/wav" });
     this.recordedChunks = []; //reset temporary chunks
   }
 
