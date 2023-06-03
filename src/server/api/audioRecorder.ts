@@ -49,4 +49,15 @@ export class AudioRecorder {
       this.mediaStream?.getTracks().forEach((track) => track.stop());
     }
   }
+
+  public playRecording() {
+    if (this.speech) {
+      const audio = new Audio();
+      const speechUrl = URL.createObjectURL(this.speech);
+      audio.src = speechUrl;
+      audio.play();
+    } else {
+      console.error("No recorded speech available.");
+    }
+  }
 }

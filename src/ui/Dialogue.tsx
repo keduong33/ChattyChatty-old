@@ -2,7 +2,7 @@ import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
-} from "../server/dialogue/dialogue";
+} from "../server/dialogue/Dialogue";
 import { messageModel } from "../server/models/messageModel";
 import React from "react";
 import { AISpeak } from "../server/common/responsiveVoiceAdapter";

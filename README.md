@@ -33,3 +33,9 @@ Dev
 Build
 
 `npm run build`
+
+## Licences
+
+* DeepSpeech: [License](https://github.com/mozilla/DeepSpeech/blob/master/LICENSE)
+* Responsive Voice: [License](https://responsivevoice.org/license/)
+* Mozilla Public License : [License](https://www.mozilla.org/en-US/MPL/)
