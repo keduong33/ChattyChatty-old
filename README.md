@@ -12,11 +12,15 @@ Install the dependencies
 
 `npm install`
 
+### Environment variables setup
+
 Create an .env in the root and supply `API_KEY` from OpenAI
 
 ```typescript
 VITE_API_KEY=YOUR_API_KEY
 ```
+
+### Secret files
 
 Create `responsiveVoiceAPI.js` in /src/server/api
 
