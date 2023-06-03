@@ -5,9 +5,9 @@ import {
 } from "../../server/src/dialogue/Dialogue";
 import { messageModel } from "../../server/src/models/messageModel";
 import React from "react";
-import { AISpeak } from "../../server/src/common/responsiveVoiceAdapter";
+import { AISpeak } from "../../../src/server/src/common/responsiveVoiceAdapter";
 import { TLanguage } from "../../server/src/models/types";
-import { createNewMessage } from "../../server/src/common/functions";
+import { createNewMessage } from "../../../src/server/src/common/functions";
 
 export function Dialogue() {
   const [text, setText] = useState("");
