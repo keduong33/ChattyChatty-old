@@ -30,11 +30,15 @@ Copy that in and read the [docs](https://responsivevoice.org/api/)
 
 ## Usage
 
-Dev
+### Dev (Local)
 
-`npm run dev`
+Have to run 2 commands (1 for server, 1 for ui)
 
-Build
+`npm run dev:server`
+
+`npm run dev:ui`
+
+*Build*
 
 `npm run build`
 
