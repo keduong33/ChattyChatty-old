@@ -1,5 +1,5 @@
 import React from "react";
-import { AudioRecorder } from "../server/api/audioRecorder";
+import { AudioRecorder } from "../../server/src/api/audioRecorder";
 
 const audioRecorder = new AudioRecorder();
 

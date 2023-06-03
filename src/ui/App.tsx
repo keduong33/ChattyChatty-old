@@ -1,6 +1,6 @@
-import { Dialogue } from "./ui/Dialogue";
+import { Dialogue } from "./src/Dialogue";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Test from "./ui/Test";
+import Test from "./src/Test";
 
 function App() {
   return (

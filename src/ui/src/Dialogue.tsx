@@ -2,12 +2,12 @@ import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
-} from "../server/dialogue/Dialogue";
-import { messageModel } from "../server/models/messageModel";
+} from "../../server/src/dialogue/Dialogue";
+import { messageModel } from "../../server/src/models/messageModel";
 import React from "react";
-import { AISpeak } from "../server/common/responsiveVoiceAdapter";
-import { TLanguage } from "../server/models/types";
-import { createNewMessage } from "../server/common/functions";
+import { AISpeak } from "../../server/src/common/responsiveVoiceAdapter";
+import { TLanguage } from "../../server/src/models/types";
+import { createNewMessage } from "../../server/src/common/functions";
 
 export function Dialogue() {
   const [text, setText] = useState("");
