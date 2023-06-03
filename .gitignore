@@ -28,4 +28,4 @@ tsconfig.node.tsbuildinfo
 
 # Secret Files
 secrets.ts*
-responsivevoiceAPI.js
+responsiveVoiceAPI.js
