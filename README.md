@@ -1,46 +1,15 @@
 # Chatty Chatty
 
-This is a friendly chatty
+This is a repo for a friendly chatty chatty bot
 
-## Installation
+## Important Note
 
-Use NodeJS version 20 if possible
+* This is a **duo-repo** setup, which means you have to install dependencies for each repo: *server* & *client.*
+* I included a README.md for each repo, please follow the setup instructions
 
-`nvm use 20`
+Use NodeJS version 20 if possible (this project created using this Node version)
 
-Install the dependencies
-
-`npm install`
-
-### Environment variables setup
-
-Create an .env in the root and supply `API_KEY` from OpenAI
-
-```typescript
-VITE_API_KEY=YOUR_API_KEY
-```
-
-### Secret files
-
-Create `responsiveVoiceAPI.js` in /src/server/api
-
-Download the JS file from: https://code.responsivevoice.org/responsivevoice.js?key=KEY
-
-Copy that in and read the [docs](https://responsivevoice.org/api/)
-
-## Usage
-
-### Dev (Local)
-
-Have to run 2 commands (1 for server, 1 for ui)
-
-`npm run dev:server`
-
-`npm run dev:ui`
-
-*Build*
-
-`npm run build`
+`nvm use 20.2.0`
 
 ## Licenses
 
