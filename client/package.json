@@ -2,6 +2,10 @@
   "name": "app-client",
   "private": true,
   "version": "0.0.1",
+  "description": "Client code for app",
+  "author": "David & Jason",
+  "license": "ISC",
+
   "type": "module",
   "scripts": {
     "dev": "vite",
