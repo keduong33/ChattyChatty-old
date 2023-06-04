@@ -22,6 +22,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "src/server/src/api/responsiveVoiceAPI.js"],
-  "exclude": [],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": []
 }

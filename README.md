@@ -42,7 +42,7 @@ Have to run 2 commands (1 for server, 1 for ui)
 
 `npm run build`
 
-## Licences
+## Licenses
 
 * DeepSpeech: [License](https://github.com/mozilla/DeepSpeech/blob/master/LICENSE)
 * Responsive Voice: [License](https://responsivevoice.org/license/)

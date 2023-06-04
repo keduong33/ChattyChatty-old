@@ -1,8 +1,8 @@
 {
   "name": "app-ui",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "App UI Package.json",
+  "main": "index.tsx",
   "type": "module",
   "scripts": {
     "dev": "vite"

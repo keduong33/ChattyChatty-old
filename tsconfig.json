@@ -7,21 +7,18 @@
     "outDir": "dist",
     "allowJs": true,
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["workspaces",],
-  "exclude": [],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": ["workspaces"],
+  "exclude": ["node_modules"]
 }
