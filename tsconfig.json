@@ -21,7 +21,7 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "workspaces/server/src/api/responsiveVoiceAPI.js", "workspaces/ui/main.tsx", "workspaces/ui/tsconfig.json", "workspaces/server/index.ts", "workspaces/vite-env.d.ts", "workspaces/ui/App.tsx", "workspaces/ui/src", "workspaces/server/src/dialogue", "workspaces/server/src/handlers", "workspaces/server/src/models"],
+  "include": ["workspaces",],
   "exclude": [],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

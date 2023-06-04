@@ -2,11 +2,11 @@ import { useState } from "react";
 import {
   sendInitialMessage,
   sendUserMessage,
-} from "../../server/src/dialogue/Dialogue";
-import { messageModel } from "../../server/src/models/messageModel";
+} from "../../../server/src/dialogue/Dialogue";
+import { messageModel } from "../../../server/src/models/messageModel";
 import React from "react";
 import { AISpeak } from "../../../src/server/src/common/responsiveVoiceAdapter";
-import { TLanguage } from "../../server/src/models/types";
+import { TLanguage } from "../../../server/src/models/types";
 import { createNewMessage } from "../../../src/server/src/common/functions";
 
 export function Dialogue() {
@@ -15,21 +15,21 @@ export function Dialogue() {
   const [loading, setLoading] = useState(true);
   const language: TLanguage = "Deutsch";
 
-  async function handleSendButtonClick() {
-    setLoading(true);
+  // async function handleSendButtonClick() {
+  //   setLoading(true);
 
-    const userMessage: messageModel = createNewMessage("user", text);
-    setMessageList((prevMessage) => [...prevMessage, userMessage]);
-    const aiMessage = await sendUserMessage(userMessage, language);
+  //   const userMessage: messageModel = createNewMessage("user", text);
+  //   setMessageList((prevMessage) => [...prevMessage, userMessage]);
+  //   const aiMessage = await sendUserMessage(userMessage, language);
 
-    if (aiMessage) {
-      AISpeak(aiMessage.content, language);
-      setMessageList((prevMessage) => [...prevMessage, aiMessage]);
-    } else console.log("Something wrong backend");
+  //   if (aiMessage) {
+  //     AISpeak(aiMessage.content, language);
+  //     setMessageList((prevMessage) => [...prevMessage, aiMessage]);
+  //   } else console.log("Something wrong backend");
 
-    setText("");
-    setLoading(false);
-  }
+  //   setText("");
+  //   setLoading(false);
+  // }
 
   /* TODO: Uncomment this for a complete app */
   /* TODO: Add AISpeak to the initial Message */
@@ -60,7 +60,7 @@ export function Dialogue() {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
           onClick={() => {
-            handleSendButtonClick();
+            // handleSendButtonClick();
           }}
         >
           Send
