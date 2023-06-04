@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "outDir": "dist",
-    "allowJs": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -18,9 +17,9 @@
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "src/server/src/api/responsiveVoiceAPI.js"],
-  "exclude": []
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

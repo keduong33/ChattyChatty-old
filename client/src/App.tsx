@@ -1,6 +1,6 @@
-import { Dialogue } from "./views/Dialogue";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Test from "./views/Test";
+import { Dialogue } from "./views/Dialogue";
 
 function App() {
   return (

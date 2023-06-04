@@ -1,4 +1,4 @@
-import { TLanguage } from "../../../server/src/models/types";
+import { TLanguage } from "../../../workspaces/server/src/models/types";
 
 export function AISpeak(content: string, language: TLanguage) {
   try {
