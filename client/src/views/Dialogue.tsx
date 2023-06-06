@@ -1,19 +1,19 @@
 import { useState } from "react";
-import {
-  sendInitialMessage,
-  sendUserMessage,
-} from "../../../server/src/dialogue/Dialogue";
-import { messageModel } from "../../../server/src/models/messageModel";
-import React from "react";
-import { AISpeak } from "../../../src/server/src/common/responsiveVoiceAdapter";
-import { TLanguage } from "../../../server/src/models/types";
-import { createNewMessage } from "../../../src/server/src/common/functions";
+// import {
+//   sendInitialMessage,
+//   sendUserMessage,
+// } from "../../../server/src/dialogue/Dialogue";
+// import { messageModel } from "../../../server/src/models/messageModel";
+// import React from "react";
+// import { AISpeak } from "../../../src/server/src/common/responsiveVoiceAdapter";
+// import { TLanguage } from "../../../server/src/models/types";
+// import { createNewMessage } from "../../../src/server/src/common/functions";
 
 export function Dialogue() {
   const [text, setText] = useState("");
-  const [messageList, setMessageList] = useState<messageModel[]>([]);
+  // const [messageList, setMessageList] = useState<messageModel[]>([]);
   const [loading, setLoading] = useState(true);
-  const language: TLanguage = "Deutsch";
+  // const language: TLanguage = "Deutsch";
 
   // async function handleSendButtonClick() {
   //   setLoading(true);
@@ -67,13 +67,13 @@ export function Dialogue() {
         </button>
       </div>
       <div>
-        {messageList.map((message: messageModel, i) => (
+        {/* {messageList.map((message: messageModel, i) => (
           <div key={i}>
             <div>
               {message.sender}: {message.content}
             </div>
           </div>
-        ))}
+        ))} */}
         {loading && <div>Bot Typing...</div>}
       </div>
       {/*TODO: Setup voice recording*/}
