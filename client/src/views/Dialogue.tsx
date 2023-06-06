@@ -9,7 +9,7 @@ import { useState } from "react";
 // import { TLanguage } from "../../../server/src/models/types";
 // import { createNewMessage } from "../../../src/server/src/common/functions";
 
-export function Dialogue() {
+export function DialoguePage() {
   const [text, setText] = useState("");
   // const [messageList, setMessageList] = useState<messageModel[]>([]);
   // const [loading, setLoading] = useState(true);

@@ -6,7 +6,7 @@ const handler: Handler = async (
 ) => {
   return {
     statusCode: 200,
-    body: JSON.stringify({ message: "Hello" }),
+    body: JSON.stringify({ message: "Good check mate ;)" }),
   };
 };
 

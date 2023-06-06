@@ -2,7 +2,7 @@ import { AudioRecorder } from "../handlers/audioRecorder";
 
 const audioRecorder = new AudioRecorder();
 
-function Test() {
+export default function TestPage() {
   return (
     <div>
       <div>Test</div>
@@ -50,5 +50,3 @@ function Test() {
     </div>
   );
 }
-
-export default Test;
