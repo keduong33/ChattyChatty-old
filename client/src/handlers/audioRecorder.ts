@@ -3,7 +3,7 @@ export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined;
   private recordedChunks: Blob[] = [];
   private speech: Blob | undefined;
-  private text = "";
+  // private text = "";
 
   private handleSuccess = (stream: MediaStream) => {
     this.mediaStream = stream;
