@@ -6,7 +6,7 @@
     "rootDir": "src",                                    /* Specify the root folder within your source files. */
     // "resolveJsonModule": true,                           /* Enable importing .json files. */
     "allowJs": true,                                     
-    "outDir": "build",                                   /* Specify an output folder for all emitted files. */
+    "outDir": "dist",                                   /* Specify an output folder for all emitted files. */
     "esModuleInterop": true,                            
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
     "strict": true,                                      /* Enable all strict type-checking options. */

@@ -1,0 +1,11 @@
+{
+    "name": "app-root",
+    "version": "0.0.1",
+    "description": "Root",
+    "license": "ISC",
+    "keywords": [],
+    "workspaces": [
+        "./client/*",
+        "./serverless/*"
+    ]
+}
