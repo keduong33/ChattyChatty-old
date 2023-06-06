@@ -1,0 +1,9 @@
+{
+  "name": "app-root",
+  "version": "0.0.1",
+  "description": "Root",
+  "scripts": {
+    "dev": "cd ./client & npm run dev:netlify",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

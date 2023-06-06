@@ -29,3 +29,6 @@ tsconfig.node.tsbuildinfo
 # Secret Files
 secrets.ts*
 responsiveVoiceAPI.js
+
+# Local Netlify folder
+.netlify
