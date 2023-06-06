@@ -4,7 +4,6 @@
   "description": "Server code for app",
   "author": "David & Jason",
   "license": "ISC",
-  "main": "index.ts",
   "scripts": {
     "dev": "tsx watch src/",
     "test": "echo \"Error: no test specified\" && exit 1"
