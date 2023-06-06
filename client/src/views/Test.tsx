@@ -1,12 +1,6 @@
-import React from "react";
 import { AudioRecorder } from "../handlers/audioRecorder";
-import axios from "axios";
 
 const audioRecorder = new AudioRecorder();
-const getConnection = async () => {
-  const response = await axios.get("http://localhost:3000/test");
-  return response.data;
-};
 
 function Test() {
   return (
@@ -47,8 +41,8 @@ function Test() {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
         type="button"
         onClick={async () => {
-          await responsiveVoice.speak("Try connecting");
-          console.log(await getConnection());
+          // await responsiveVoice.speak("Try connecting");
+          // console.log(await getConnection());
         }}
       >
         Test

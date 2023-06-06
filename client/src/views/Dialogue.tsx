@@ -12,7 +12,7 @@ import { useState } from "react";
 export function Dialogue() {
   const [text, setText] = useState("");
   // const [messageList, setMessageList] = useState<messageModel[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   // const language: TLanguage = "Deutsch";
 
   // async function handleSendButtonClick() {
@@ -74,7 +74,7 @@ export function Dialogue() {
             </div>
           </div>
         ))} */}
-        {loading && <div>Bot Typing...</div>}
+        {/* {loading && <div>Bot Typing...</div>} */}
       </div>
       {/*TODO: Setup voice recording*/}
       <div>
