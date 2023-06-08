@@ -7,13 +7,17 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
-    "dev:netlify":"netlify dev",
+    "dev:netlify": "netlify dev",
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.12",
+    "@tanstack/react-query-devtools": "^4.29.12",
+    "@trpc/client": "^10.29.1",
+    "@trpc/react-query": "^10.29.1",
     "axios": "^1.4.0",
     "netlify-cli": "^15.3.1",
     "react": "^18.2.0",

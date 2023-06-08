@@ -2,7 +2,7 @@ import { AudioRecorder } from "../handlers/audioRecorder";
 
 const audioRecorder = new AudioRecorder();
 
-export default function TestPage() {
+export function TestPage() {
   return (
     <div>
       <div>Test</div>
