@@ -5,7 +5,7 @@ import {
   QueryClientProvider,
   QueryErrorResetBoundary,
 } from "@tanstack/react-query";
-import react, { type ReactNode, Suspense } from "react";
+import { type ReactNode, Suspense } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 

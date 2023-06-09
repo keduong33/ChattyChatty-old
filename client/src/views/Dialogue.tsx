@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { trpc } from "../providers/trpc";
-import { text } from "stream/consumers";
 // import {
 //   sendInitialMessage,
 //   sendUserMessage,

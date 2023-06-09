@@ -1,5 +1,5 @@
 import { publicProcedure, router } from "../builder";
 
 export const userRouter = router({
-  me: publicProcedure.query((_req) => "hello, it's me"),
+  me: publicProcedure.query((req: any) => "hello, it's me"),
 });

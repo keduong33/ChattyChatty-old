@@ -5,5 +5,5 @@ import { publicProcedure, router } from "../builder";
 export const chatBotRouter = router({
   getReply: publicProcedure
     .input(z.string())
-    .query((resp) => ChatBotReply(resp.input)),
+    .query((resp: any) => ChatBotReply(resp.input)),
 });
