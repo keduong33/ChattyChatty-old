@@ -5,6 +5,13 @@ export class AudioRecorder {
   private speech: Blob | undefined;
   // private text = "";
 
+  public startRecording() {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true }) // Request access to the microphone
+      .then(this.handleSuccess)
+      .catch(this.handleError);
+  }
+
   private handleSuccess = (stream: MediaStream) => {
     this.mediaStream = stream;
     this.mediaRecorder = new MediaRecorder(this.mediaStream);
@@ -35,13 +42,6 @@ export class AudioRecorder {
 
   public getSpeech(): Blob | undefined {
     return this.speech;
-  }
-
-  public startRecording() {
-    navigator.mediaDevices
-      .getUserMedia({ audio: true }) // Request access to the microphone
-      .then(this.handleSuccess)
-      .catch(this.handleError);
   }
 
   public stopRecording() {

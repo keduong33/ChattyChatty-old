@@ -1,53 +1,55 @@
 declare const responsiveVoice: any;
+import { BlueButton } from "../components/buttons";
 import { AudioRecorder } from "../handlers/audioRecorder";
+import { trpc } from "../providers/trpc";
 
 const audioRecorder = new AudioRecorder();
 
 export function TestPage() {
+  const { data, refetch } = trpc.user.me.useQuery(undefined, {
+    enabled: false,
+  });
+
+  const handleClick = async () => {
+    await refetch();
+  };
+
   return (
     <div>
       <div>Test</div>
-      <div id="inputdevices"></div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
-        type="button"
+      <BlueButton
         onClick={() => {
           audioRecorder.startRecording();
         }}
       >
         Start
-      </button>
+      </BlueButton>
 
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
-        type="button"
+      <BlueButton
         onClick={() => {
           audioRecorder.stopRecording();
         }}
       >
         End
-      </button>
+      </BlueButton>
 
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
-        type="button"
+      <BlueButton
         onClick={() => {
           audioRecorder.playRecording();
         }}
       >
         Play
-      </button>
+      </BlueButton>
 
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
-        type="button"
+      <BlueButton
         onClick={async () => {
           await responsiveVoice.speak("Try connecting");
-          // console.log(await getConnection());
+          await handleClick();
+          console.log(data);
         }}
       >
         Test
-      </button>
+      </BlueButton>
     </div>
   );
 }

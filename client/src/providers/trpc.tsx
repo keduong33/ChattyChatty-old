@@ -9,7 +9,7 @@ import react, { type ReactNode, Suspense } from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 
-const trpc = createTRPCReact<AppRouter>();
+export const trpc = createTRPCReact<AppRouter>();
 
 const trpcClient = trpc.createClient({
   links: [

@@ -10,6 +10,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <IndexPage />,
+    errorElement: <div>Error Index Page</div>,
   },
   {
     path: "/dialogue",
