@@ -1,15 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { TRPCProvider } from "./providers/trpc";
+import RouterProvider from "./providers/router";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/test" element={<TestPage />} />
-      </Routes>
-    </BrowserRouter>
+    <TRPCProvider>
+      <RouterProvider />
+    </TRPCProvider>
   </React.StrictMode>
 );

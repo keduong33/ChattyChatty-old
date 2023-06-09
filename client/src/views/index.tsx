@@ -1,14 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import { BlueButton } from "../components/buttons";
 
 export function IndexPage() {
+  const navigate = useNavigate();
+  const handleStartClick = () => {
+    navigate("/test");
+  };
+
   return (
     <div>
       <h1>Index Page</h1>
-      <BlueButton
-        onClick={() => {
-          console.log("hello");
-        }}
-      ></BlueButton>
+      <BlueButton onClick={handleStartClick}>Start</BlueButton>
     </div>
   );
 }

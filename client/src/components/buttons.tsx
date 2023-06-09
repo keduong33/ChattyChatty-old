@@ -2,11 +2,13 @@ interface buttonProps {
   onClick: () => void;
   className?: string;
   disabled?: boolean;
+  children: React.ReactNode;
 }
 export const BlueButton = ({
   onClick,
   className,
   disabled = false,
+  children,
 }: buttonProps) => {
   return (
     <button
@@ -15,7 +17,7 @@ export const BlueButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      Send
+      {children}
     </button>
   );
 };

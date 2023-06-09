@@ -2,3 +2,7 @@
 functions = "../serverless"
 build = "npm run build"
 publish = "dist"
+
+[dev]
+functions = "../serverless"
+autoLaunch = true
