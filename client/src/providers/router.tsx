@@ -2,9 +2,9 @@ import {
   createBrowserRouter,
   RouterProvider as RRProvider,
 } from "react-router-dom";
-import { IndexPage } from "../views/_index";
-import { DialoguePage } from "../views/_dialogue";
-import { TestPage } from "../views/_test";
+import { IndexPage } from "../views";
+import { DialoguePage } from "../views/dialogue";
+import { TestPage } from "../views/test";
 
 const router = createBrowserRouter([
   {
