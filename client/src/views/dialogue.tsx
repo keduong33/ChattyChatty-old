@@ -19,14 +19,14 @@ export function DialoguePage() {
     }
   );
   const [messageList, setMessageList] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   // const language: TLanguage = "Deutsch";
 
   async function handleSendButtonClick() {
     setLoading(true);
     if (userText) {
-      setMessageList((prevMessage) => [...prevMessage, userText]);
       await refetch();
+      setMessageList((prevMessage) => [...prevMessage, userText]);
 
       if (chatBotReply) {
         console.log("here");
@@ -35,10 +35,10 @@ export function DialoguePage() {
       } else console.log("Chat Bot does not have any thing to say");
 
       setUserText("");
-      setLoading(false);
     } else {
       console.log("You are not texting");
     }
+    setLoading(false);
   }
 
   /* TODO: Uncomment this for a complete app */
