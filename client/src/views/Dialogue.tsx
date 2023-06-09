@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { trpc } from "../providers/trpc";
+import { text } from "stream/consumers";
 // import {
 //   sendInitialMessage,
 //   sendUserMessage,
@@ -10,26 +12,35 @@ import { useState } from "react";
 // import { createNewMessage } from "../../../src/server/src/common/functions";
 
 export function DialoguePage() {
-  const [text, setText] = useState("");
-  // const [messageList, setMessageList] = useState<messageModel[]>([]);
-  // const [loading, setLoading] = useState(true);
+  const [userText, setUserText] = useState("");
+  const { data: chatBotReply, refetch } = trpc.chatBot.getReply.useQuery(
+    userText,
+    {
+      enabled: false,
+    }
+  );
+  const [messageList, setMessageList] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
   // const language: TLanguage = "Deutsch";
 
-  // async function handleSendButtonClick() {
-  //   setLoading(true);
+  async function handleSendButtonClick() {
+    setLoading(true);
+    if (userText) {
+      setMessageList((prevMessage) => [...prevMessage, userText]);
+      await refetch();
 
-  //   const userMessage: messageModel = createNewMessage("user", text);
-  //   setMessageList((prevMessage) => [...prevMessage, userMessage]);
-  //   const aiMessage = await sendUserMessage(userMessage, language);
+      if (chatBotReply) {
+        console.log("here");
+        // AISpeak(aiMessage.content, language);
+        setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
+      } else console.log("Chat Bot does not have any thing to say");
 
-  //   if (aiMessage) {
-  //     AISpeak(aiMessage.content, language);
-  //     setMessageList((prevMessage) => [...prevMessage, aiMessage]);
-  //   } else console.log("Something wrong backend");
-
-  //   setText("");
-  //   setLoading(false);
-  // }
+      setUserText("");
+      setLoading(false);
+    } else {
+      console.log("You are not texting");
+    }
+  }
 
   /* TODO: Uncomment this for a complete app */
   /* TODO: Add AISpeak to the initial Message */
@@ -53,28 +64,24 @@ export function DialoguePage() {
           className="shadow appearance-none border rounded w-max py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="prompt"
           type="text"
-          value={text}
-          onChange={(event) => setText(event.target.value)}
+          value={userText}
+          onChange={(event) => setUserText(event.target.value)}
         ></input>
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
-          onClick={() => {
-            // handleSendButtonClick();
-          }}
+          onClick={handleSendButtonClick}
         >
           Send
         </button>
       </div>
       <div>
-        {/* {messageList.map((message: messageModel, i) => (
+        {messageList.map((message, i) => (
           <div key={i}>
-            <div>
-              {message.sender}: {message.content}
-            </div>
+            <div>{message}</div>
           </div>
-        ))} */}
-        {/* {loading && <div>Bot Typing...</div>} */}
+        ))}
+        {loading && <div>Bot Typing...</div>}
       </div>
       {/*TODO: Setup voice recording*/}
       <div>
