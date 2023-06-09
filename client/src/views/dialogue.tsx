@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "../providers/trpc";
 // import {
 //   sendInitialMessage,
@@ -12,6 +12,7 @@ import { trpc } from "../providers/trpc";
 
 export function DialoguePage() {
   const [userText, setUserText] = useState("");
+  const [counter, setCounter] = useState(0);
   const { data: chatBotReply, refetch } = trpc.chatBot.getReply.useQuery(
     userText,
     {
@@ -22,19 +23,22 @@ export function DialoguePage() {
   const [loading, setLoading] = useState(false);
   // const language: TLanguage = "Deutsch";
 
+  useEffect(() => {
+    if (chatBotReply) {
+      console.log("here");
+      setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
+      setUserText("");
+    } else {
+      console.log("There");
+      console.log("Chat Bot does not have anything to say");
+    }
+  }, [chatBotReply]);
+
   async function handleSendButtonClick() {
     setLoading(true);
     if (userText) {
       await refetch();
       setMessageList((prevMessage) => [...prevMessage, userText]);
-
-      if (chatBotReply) {
-        console.log("here");
-        // AISpeak(aiMessage.content, language);
-        setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
-      } else console.log("Chat Bot does not have any thing to say");
-
-      setUserText("");
     } else {
       console.log("You are not texting");
     }
