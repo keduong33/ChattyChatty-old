@@ -9,7 +9,7 @@
   "scripts": {
     "dev:netlify": "netlify dev",
     "dev": "vite",
-    "prebuild":"cd ../../../serverless && npm i",
+    "prebuild":"cd ../serverless && npm i",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
