@@ -3,25 +3,26 @@ import { trpc } from "../providers/trpc";
 
 export function DialoguePage() {
   const [userText, setUserText] = useState("");
-  const { data: chatBotReply, mutate } =
-    trpc.chatBot.submitUserText.useMutation();
+  const { mutate } = trpc.chatBot.submitUserText.useMutation();
   const [messageList, setMessageList] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   async function handleSendButtonClick() {
-    setLoading(true);
-    if (userText) {
-      setMessageList((prevMessage) => [...prevMessage, userText]);
-      mutate(userText, {
-        onSuccess: () => {
-          // Update the message list with the fetched data
-          if (chatBotReply)
-            setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
-        },
-      });
-    } else {
+    if (!userText) {
       console.log("You are not texting");
+      return;
     }
+
+    setLoading(true);
+    setMessageList((prevMessage) => [...prevMessage, userText]);
+    mutate(userText, {
+      onSuccess: (chatBotReply) => {
+        setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+    });
     setLoading(false);
   }
 
