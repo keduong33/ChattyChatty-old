@@ -1,61 +1,29 @@
 import { useEffect, useState } from "react";
 import { trpc } from "../providers/trpc";
-// import {
-//   sendInitialMessage,
-//   sendUserMessage,
-// } from "../../../server/src/dialogue/Dialogue";
-// import { messageModel } from "../../../server/src/models/messageModel";
-// import React from "react";
-// import { AISpeak } from "../../../src/server/src/common/responsiveVoiceAdapter";
-// import { TLanguage } from "../../../server/src/models/types";
-// import { createNewMessage } from "../../../src/server/src/common/functions";
 
 export function DialoguePage() {
   const [userText, setUserText] = useState("");
-  const [counter, setCounter] = useState(0);
-  const { data: chatBotReply, refetch } = trpc.chatBot.getReply.useQuery(
-    userText,
-    {
-      enabled: false,
-    }
-  );
+  const { data: chatBotReply, mutate } =
+    trpc.chatBot.submitUserText.useMutation();
   const [messageList, setMessageList] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  // const language: TLanguage = "Deutsch";
-
-  useEffect(() => {
-    if (chatBotReply) {
-      console.log("here");
-      setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
-      setUserText("");
-    } else {
-      console.log("There");
-      console.log("Chat Bot does not have anything to say");
-    }
-  }, [chatBotReply]);
 
   async function handleSendButtonClick() {
     setLoading(true);
     if (userText) {
-      await refetch();
       setMessageList((prevMessage) => [...prevMessage, userText]);
+      mutate(userText, {
+        onSuccess: () => {
+          // Update the message list with the fetched data
+          if (chatBotReply)
+            setMessageList((prevMessage) => [...prevMessage, chatBotReply]);
+        },
+      });
     } else {
       console.log("You are not texting");
     }
     setLoading(false);
   }
-
-  /* TODO: Uncomment this for a complete app */
-  /* TODO: Add AISpeak to the initial Message */
-  // window.onload = async () => {
-  //   setLoading(true);
-  //   const aiMessage = await sendInitialMessage(language);
-  //   if (aiMessage) {
-  //     speak(aiMessage.content, language);
-  //     setMessageList([aiMessage]);
-  //   } else console.log("Uh oh something bad");
-  //   setLoading(false);
-  // };
 
   /* TODO: Add Language Picker (prolly a component itself) */
 
@@ -109,5 +77,17 @@ export function DialoguePage() {
         </button>
       </div>
     </div>
+
+    /* TODO: Uncomment this for a complete app */
+    /* TODO: Add AISpeak to the initial Message */
+    // window.onload = async () => {
+    //   setLoading(true);
+    //   const aiMessage = await sendInitialMessage(language);
+    //   if (aiMessage) {
+    //     speak(aiMessage.content, language);
+    //     setMessageList([aiMessage]);
+    //   } else console.log("Uh oh something bad");
+    //   setLoading(false);
+    // };
   );
 }

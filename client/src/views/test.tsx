@@ -6,12 +6,12 @@ import { trpc } from "../providers/trpc";
 const audioRecorder = new AudioRecorder();
 
 export function TestPage() {
-  const { data, refetch } = trpc.user.me.useQuery(undefined, {
+  const { data, refetch, isSuccess } = trpc.user.me.useQuery(undefined, {
     enabled: false,
   });
 
-  const handleClick = async () => {
-    await refetch();
+  const handleClick = () => {
+    refetch();
   };
 
   return (
@@ -44,8 +44,8 @@ export function TestPage() {
       <BlueButton
         onClick={async () => {
           await responsiveVoice.speak("Try connecting");
-          await handleClick();
-          console.log(data);
+          handleClick();
+          if (isSuccess) console.log(data);
         }}
       >
         Test
