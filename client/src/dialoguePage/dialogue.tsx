@@ -9,7 +9,6 @@ export function DialoguePage() {
   const [userText, setUserText] = useState("");
   const { mutate } = trpc.chatBot.submitUserText.useMutation();
   const [messageList, setMessageList] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState("");
   const [disabledChat, setDisabledChat] = useState(true);
 
@@ -28,7 +27,6 @@ export function DialoguePage() {
       return;
     }
 
-    setLoading(true);
     setMessageList((prevMessage) => [...prevMessage, userText]);
     mutate(
       { userText: userText, language: language },
@@ -44,7 +42,6 @@ export function DialoguePage() {
         },
       }
     );
-    setLoading(false);
   }
 
   /* TODO: Add Language Picker (prolly a component itself) */
@@ -84,7 +81,8 @@ export function DialoguePage() {
         </BlueButton>
       </div>
 
-      {loading && <div>Bot Typing...</div>}
+      {/* Maybe find a better way but rn check if there has not been a response --> messageList length is odd */}
+      {messageList.length % 2 != 0 && <div>Bot Typing...</div>}
       <div title="Messages List" className="mb-2">
         {messageList.map((message, i) => (
           <div key={i}>
