@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { trpc } from "../providers/trpc";
 import ReactDropdown from "react-dropdown";
 import { allowedLanguages } from "../../../serverless/src/dialogue/chatbot/verifyLanguage";
@@ -84,13 +84,13 @@ export function DialoguePage() {
         </BlueButton>
       </div>
 
+      {loading && <div>Bot Typing...</div>}
       <div title="Messages List" className="mb-2">
         {messageList.map((message, i) => (
           <div key={i}>
             <div>{message}</div>
           </div>
         ))}
-        {loading && <div>Bot Typing...</div>}
       </div>
 
       {/*TODO: Setup voice recording*/}
