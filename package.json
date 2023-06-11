@@ -4,7 +4,10 @@
   "description": "Root",
   "scripts": {
     "dev": "cd ./client && npm run dev:netlify",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd ./client && npm run build:netlify",
+    "deploy:dev":"cd ./client && npm run deploy:dev",
+    "deploy:prod":"cd ./client && npm run deploy:prod"
   },
     "engines": {
       "node": ">=20.2.0"
