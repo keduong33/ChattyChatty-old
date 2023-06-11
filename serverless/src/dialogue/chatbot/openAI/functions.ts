@@ -1,5 +1,5 @@
-import { messageModel } from "./models/messageModel";
-import { TLanguage } from "./models/types";
+import { messageModel } from "../models/messageModel";
+import { TLanguage } from "../models/types";
 
 export function createNewMessage(
   sender: "user" | "bot",
@@ -11,7 +11,7 @@ export function createNewMessage(
   };
 }
 
-export function createOpenAiSystemMessage(language: TLanguage) {
+export function createOpenAISystemMessage(language: TLanguage) {
   return {
     role: "system",
     content: `You are my ${language} language teacher. I only speak English and I am practicing my ${language}. Translate my sentence into ${language}.`,

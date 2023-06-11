@@ -1,12 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { messageModel } from "./models/messageModel";
-import { AXIOS_OPENAI_HEADER } from "./textToSpeech/config";
+import { messageModel } from "../models/messageModel";
 import {
   createInitialOpenAiSystemMessage,
   createNewMessage,
-  createOpenAiSystemMessage,
+  createOpenAISystemMessage,
 } from "./functions";
-import { TLanguage } from "./models/types";
+
+import { TLanguage } from "../models/types";
+
 import {
   OPENAI_API_ENDPOINT,
   OPENAI_MODEL_NAME,
@@ -15,8 +16,8 @@ import {
   OPENAI_MODEL_TOP_P,
   OPENAI_MODEL_FREQUENCY_PENALTY,
   OPENAI_PRESENCE_PENALTY,
-} from "./openAI/config";
-import { getResponseContent } from "./handlers/axiosHandler";
+  AXIOS_OPENAI_HEADER,
+} from "./config";
 
 export async function sendUserMessage(
   userMessage: messageModel,
@@ -27,7 +28,7 @@ export async function sendUserMessage(
       OPENAI_API_ENDPOINT,
       {
         messages: [
-          createOpenAiSystemMessage(language),
+          createOpenAISystemMessage(language),
           { role: "user", content: `${userMessage.content}` },
         ],
         model: OPENAI_MODEL_NAME,
@@ -41,11 +42,11 @@ export async function sendUserMessage(
         headers: AXIOS_OPENAI_HEADER,
       }
     );
-    const aiMessage = createAiMessage(response);
+    const aiMessage = createAIMessage(response);
     if (aiMessage) return aiMessage;
     throw Error("No reply from OpenAI API");
   } catch (error) {
-    console.error("Error: ", error);
+    console.error("Error when send prompt to OpenAI: ", error);
   }
 }
 
@@ -62,19 +63,27 @@ export async function sendInitialMessage(language: TLanguage) {
       }
     );
 
-    const aiMessage = createAiMessage(response);
+    const aiMessage = createAIMessage(response);
     if (aiMessage) return aiMessage;
     throw Error("No reply from OpenAI API");
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error when send prompt to OpenAI:", error);
   }
 }
 
-function createAiMessage(response: AxiosResponse): messageModel | undefined {
+function createAIMessage(response: AxiosResponse): messageModel | undefined {
   const reply = getResponseContent(response);
   if (reply) {
     const aiMessage: messageModel = createNewMessage("bot", reply);
     return aiMessage;
   }
   return undefined;
+}
+
+function getResponseContent(response: AxiosResponse): string {
+  return response.data.choices[0].text;
+}
+
+export function testChatBot(userText: string): string {
+  return `This is the bot reply to : ${userText}`;
 }
