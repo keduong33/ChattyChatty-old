@@ -4,7 +4,7 @@ import { BlueButton } from "../components/buttons";
 export function IndexPage() {
   const navigate = useNavigate();
   const handleStartClick = () => {
-    navigate("/test");
+    navigate("/dialogue");
   };
 
   return (

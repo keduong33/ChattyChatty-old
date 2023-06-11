@@ -1,28 +1,30 @@
-import axios, { AxiosResponse } from "axios";
-import { messageModel } from "../models/messageModel";
-import {
-  createInitialOpenAISystemMessage,
-  createNewMessage,
-  createOpenAISystemMessage,
-} from "./functions";
-
-import { TLanguage } from "../models/types";
-
+import axios from "axios";
+import { isValidLanguage } from "../../verifyLanguage";
 import {
   OPENAI_API_ENDPOINT,
   OPENAI_MODEL_NAME,
-  OPENAI_MODEL_MAX_TOKEN,
   OPENAI_MODEL_TEMPERATURE,
+  OPENAI_MODEL_MAX_TOKEN,
   OPENAI_MODEL_TOP_P,
   OPENAI_MODEL_FREQUENCY_PENALTY,
   OPENAI_PRESENCE_PENALTY,
   AXIOS_OPENAI_HEADER,
-} from "./config";
+} from "../config";
+import {
+  createOpenAISystemMessage,
+  createInitialOpenAISystemMessage,
+  createBotMessage,
+} from "./botMessage";
+import { messageModel } from "./messageModel";
 
 export async function sendUserMessage(
   userMessage: messageModel,
-  language: TLanguage
+  language: string
 ) {
+  if (!isValidLanguage(language)) {
+    console.error("We not supporting this language");
+    return;
+  }
   try {
     const response = await axios.post(
       OPENAI_API_ENDPOINT,
@@ -42,15 +44,20 @@ export async function sendUserMessage(
         headers: AXIOS_OPENAI_HEADER,
       }
     );
-    const aiMessage = createAIMessage(response);
-    if (aiMessage) return aiMessage;
+    const botMessage = createBotMessage(response);
+
+    if (botMessage) return botMessage;
     throw Error("No reply from OpenAI API");
   } catch (error) {
-    console.error("Error when send prompt to OpenAI: ", error);
+    console.error("Error when sending prompt to OpenAI:", error);
   }
 }
 
-export async function sendInitialMessage(language: TLanguage) {
+export async function sendInitialMessage(language: string) {
+  if (!isValidLanguage(language)) {
+    console.error("We not supporting this language");
+    return;
+  }
   try {
     const response = await axios.post(
       OPENAI_API_ENDPOINT,
@@ -63,27 +70,10 @@ export async function sendInitialMessage(language: TLanguage) {
       }
     );
 
-    const aiMessage = createAIMessage(response);
-    if (aiMessage) return aiMessage;
+    const botMessage = createBotMessage(response);
+    if (botMessage) return botMessage;
     throw Error("No reply from OpenAI API");
   } catch (error) {
     console.error("Error when send prompt to OpenAI:", error);
   }
-}
-
-function createAIMessage(response: AxiosResponse): messageModel | undefined {
-  const reply = getResponseContent(response);
-  if (reply) {
-    const aiMessage: messageModel = createNewMessage("bot", reply);
-    return aiMessage;
-  }
-  return undefined;
-}
-
-function getResponseContent(response: AxiosResponse): string {
-  return response.data.choices[0].text;
-}
-
-export function testChatBot(userText: string): string {
-  return `This is the bot reply to : ${userText}`;
 }
