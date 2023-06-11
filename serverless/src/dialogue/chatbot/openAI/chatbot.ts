@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { messageModel } from "../models/messageModel";
 import {
-  createInitialOpenAiSystemMessage,
+  createInitialOpenAISystemMessage,
   createNewMessage,
   createOpenAISystemMessage,
 } from "./functions";
@@ -55,7 +55,7 @@ export async function sendInitialMessage(language: TLanguage) {
     const response = await axios.post(
       OPENAI_API_ENDPOINT,
       {
-        messages: [createInitialOpenAiSystemMessage(language)],
+        messages: [createInitialOpenAISystemMessage(language)],
         model: OPENAI_MODEL_NAME,
       },
       {

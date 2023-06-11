@@ -18,7 +18,7 @@ export function createOpenAISystemMessage(language: TLanguage) {
   };
 }
 
-export function createInitialOpenAiSystemMessage(language: TLanguage) {
+export function createInitialOpenAISystemMessage(language: TLanguage) {
   return {
     role: "system",
     content: `(friendly) Translate I'm Chatty Chatty. Ask me any question into ${language}`,
