@@ -33,14 +33,14 @@ export function DialoguePage() {
       <div className="text-4xl text-red-600">Chatbot!</div>
       <div>
         <input
-          className="shadow appearance-none border rounded w-max py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none w-max focus:outline-none focus:shadow-outline"
           id="prompt"
           type="text"
           value={userText}
           onChange={(event) => setUserText(event.target.value)}
         ></input>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
           onClick={handleSendButtonClick}
         >
@@ -58,7 +58,7 @@ export function DialoguePage() {
       {/*TODO: Setup voice recording*/}
       <div>
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
+          className="px-4 py-2 mx-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
           type="button"
           onClick={() => {
             // handleOnClick();
@@ -68,7 +68,7 @@ export function DialoguePage() {
         </button>
         <button
           disabled
-          className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit disabled:opacity-40"
+          className="px-4 py-2 font-bold text-white bg-blue-500 rounded  hover:bg-blue-700 focus:outline-none focus:shadow-outline max-w-fit max-h-fit disabled:opacity-40"
           type="button"
           onClick={() => {
             // handleOnClick();

@@ -1,5 +1,5 @@
-import { messageModel } from "../models/messageModel";
-import { TLanguage } from "../models/types";
+import { messageModel } from "./models/messageModel";
+import { TLanguage } from "./models/types";
 
 export function createNewMessage(
   sender: "user" | "bot",

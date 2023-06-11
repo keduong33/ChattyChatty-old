@@ -5,3 +5,7 @@ export const OPENAI_MODEL_MAX_TOKEN = 50;
 export const OPENAI_MODEL_TOP_P = 1;
 export const OPENAI_MODEL_FREQUENCY_PENALTY = 0;
 export const OPENAI_PRESENCE_PENALTY = 0.6;
+export const AXIOS_OPENAI_HEADER = {
+  "Content-Type": "application/json",
+  // Authorization: `Bearer ${VITE_API_KEY}`,
+};

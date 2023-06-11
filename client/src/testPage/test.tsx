@@ -1,6 +1,6 @@
 declare const responsiveVoice: any;
 import { BlueButton } from "../components/buttons";
-import { AudioRecorder } from "../handlers/audioRecorder";
+import { AudioRecorder } from "../dialoguePage/speechToText/audioRecorder";
 import { trpc } from "../providers/trpc";
 
 const audioRecorder = new AudioRecorder();

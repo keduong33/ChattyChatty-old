@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from "axios";
-import { messageModel } from "../models/messageModel";
-import { AXIOS_OPENAI_HEADER } from "../common/config";
+import { messageModel } from "./models/messageModel";
+import { AXIOS_OPENAI_HEADER } from "./textToSpeech/config";
 import {
   createInitialOpenAiSystemMessage,
   createNewMessage,
   createOpenAiSystemMessage,
-} from "../common/functions";
-import { TLanguage } from "../models/types";
+} from "./functions";
+import { TLanguage } from "./models/types";
 import {
   OPENAI_API_ENDPOINT,
   OPENAI_MODEL_NAME,
@@ -15,8 +15,8 @@ import {
   OPENAI_MODEL_TOP_P,
   OPENAI_MODEL_FREQUENCY_PENALTY,
   OPENAI_PRESENCE_PENALTY,
-} from "../api/openAIAPI";
-import { getResponseContent } from "../handlers/axiosHandler";
+} from "./openAI/config";
+import { getResponseContent } from "./handlers/axiosHandler";
 
 export async function sendUserMessage(
   userMessage: messageModel,
