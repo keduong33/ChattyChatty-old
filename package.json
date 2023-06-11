@@ -5,5 +5,8 @@
   "scripts": {
     "dev": "cd ./client && npm run dev:netlify",
     "test": "echo \"Error: no test specified\" && exit 1"
-  }
+  },
+    "engines": {
+      "node": ">=20.2.0"
+    }
 }

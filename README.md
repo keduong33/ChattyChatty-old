@@ -2,7 +2,7 @@
 
 This is a repo for a friendly chatty chatty bot
 
-## Important Note
+## Important Notes
 
 * This is a **duo-repo** setup, which means you have to install dependencies for each repo: *server* & *client.*
 * I included a README.md for each repo, please follow the setup instructions
@@ -10,6 +10,10 @@ This is a repo for a friendly chatty chatty bot
 Use NodeJS version 20 if possible (this project created using this Node version)
 
 `nvm use 20.2.0`
+
+## Run locally (after proper installation)
+
+`npm run dev`
 
 ## Licenses
 

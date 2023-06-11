@@ -4,6 +4,9 @@
   "description": "Server code for app",
   "author": "David & Jason",
   "license": "ISC",
+  "engines": {
+    "node": ">=20.2.0"
+  },
   "scripts": {
     "dev": "tsx watch src/",
     "test": "echo \"Error: no test specified\" && exit 1"

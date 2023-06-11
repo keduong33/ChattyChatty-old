@@ -6,6 +6,9 @@
   "author": "David & Jason",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": ">=20.2.0"
+  },
   "scripts": {
     "dev:netlify": "netlify dev",
     "dev": "vite",
