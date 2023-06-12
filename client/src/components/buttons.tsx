@@ -1,3 +1,5 @@
+import { twMerge } from "tailwind-merge";
+
 interface buttonProps {
   onClick: () => void;
   className?: string;
@@ -12,7 +14,10 @@ export const BlueButton = ({
 }: buttonProps) => {
   return (
     <button
-      className={`focus:shadow-outline mx-2 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:opacity-25 ${className}`}
+      className={twMerge(
+        `focus:shadow-outline mx-2 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:opacity-25`,
+        `${className}`
+      )}
       type="button"
       onClick={onClick}
       disabled={disabled}
