@@ -12,7 +12,7 @@ export const BlueButton = ({
 }: buttonProps) => {
   return (
     <button
-      className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded focus:outline-none focus:shadow-outline max-w-fit max-h-fit disabled:opacity-25 ${className}`}
+      className={`focus:shadow-outline mx-2 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:opacity-25 ${className}`}
       type="button"
       onClick={onClick}
       disabled={disabled}

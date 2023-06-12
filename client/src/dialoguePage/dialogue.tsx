@@ -51,8 +51,8 @@ export function DialoguePage() {
       <div title="Page Title" className="text-4xl text-red-600">
         Chatbot!
       </div>
-      <div title="Language Drop Down" className="flex mb-4">
-        <div className="flex mr-2 items-center">Language:</div>
+      <div title="Language Drop Down" className="mb-4 flex">
+        <div className="mr-2 flex items-center">Language:</div>
         <ReactDropdown
           className="w-48"
           options={allowedLanguages}
@@ -69,7 +69,7 @@ export function DialoguePage() {
 
       <div title="Prompt Form" className="mb-2">
         <input
-          className="px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none w-max focus:outline-none focus:shadow-outline disabled:bg-gray-600"
+          className="focus:shadow-outline w-max appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none disabled:bg-gray-600"
           id="prompt"
           type="text"
           value={userText}
@@ -94,7 +94,7 @@ export function DialoguePage() {
       {/*TODO: Setup voice recording*/}
       <div title="Voice Record">
         <button
-          className="px-4 py-2 mx-4 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline max-w-fit max-h-fit"
+          className="focus:shadow-outline mx-4 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
           type="button"
           onClick={() => {
             // handleOnClick();
@@ -104,7 +104,7 @@ export function DialoguePage() {
         </button>
         <button
           disabled
-          className="px-4 py-2 font-bold text-white bg-blue-500 rounded  hover:bg-blue-700 focus:outline-none focus:shadow-outline max-w-fit max-h-fit disabled:opacity-40"
+          className="focus:shadow-outline max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:opacity-40"
           type="button"
           onClick={() => {
             // handleOnClick();
