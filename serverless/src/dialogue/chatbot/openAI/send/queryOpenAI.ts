@@ -17,14 +17,10 @@ import {
 } from "./botMessage";
 import { messageModel } from "./messageModel";
 
-export async function sendUserMessage(
+export async function sendMessageToOpenAI(
   userMessage: messageModel,
   language: string
 ) {
-  if (!isValidLanguage(language)) {
-    console.error("We not supporting this language");
-    return;
-  }
   try {
     const response = await axios.post(
       OPENAI_API_ENDPOINT,
@@ -48,16 +44,12 @@ export async function sendUserMessage(
 
     if (botMessage) return botMessage;
     throw Error("No reply from OpenAI API");
-  } catch (error) {
-    console.error("Error when sending prompt to OpenAI:", error);
+  } catch (e) {
+    console.log(e);
   }
 }
 
-export async function sendInitialMessage(language: string) {
-  if (!isValidLanguage(language)) {
-    console.error("We not supporting this language");
-    return;
-  }
+export async function sendInitialMessageToOpenAPI(language: string) {
   try {
     const response = await axios.post(
       OPENAI_API_ENDPOINT,
@@ -73,7 +65,7 @@ export async function sendInitialMessage(language: string) {
     const botMessage = createBotMessage(response);
     if (botMessage) return botMessage;
     throw Error("No reply from OpenAI API");
-  } catch (error) {
-    console.error("Error when send prompt to OpenAI:", error);
+  } catch (e) {
+    console.log(e);
   }
 }
