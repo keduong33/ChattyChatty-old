@@ -3,6 +3,7 @@ export class AudioRecorder {
   private mediaRecorder: MediaRecorder | undefined;
   private recordedChunks: Blob[] = [];
   private speech: Blob | undefined;
+  private speechUrl = "";
   // private text = "";
 
   public startRecording() {
@@ -37,11 +38,33 @@ export class AudioRecorder {
 
   private saveSpeech() {
     this.speech = new Blob(this.recordedChunks, { type: "audio/wav" });
+    this.saveSpeechURL();
     this.recordedChunks = []; //reset temporary chunks
   }
 
-  public getSpeech(): Blob | undefined {
-    return this.speech;
+  public saveSpeechURL() {
+    if (this.speech) {
+      this.speechUrl = URL.createObjectURL(this.speech);
+    }
+  }
+
+  private blobToFile = (theBlob: Blob, fileName: string): File => {
+    const b: any = theBlob;
+    //A Blob() is almost a File() - it's just missing the two properties below which we will add
+    b.lastModifiedDate = new Date();
+    b.name = fileName;
+
+    //Cast to a File() type
+    return b as File;
+  };
+
+  public async getSpeech() {
+    const speech = await this.speech?.text();
+    return speech;
+  }
+
+  public getSpeechURL(): string {
+    return this.speechUrl;
   }
 
   public stopRecording() {
@@ -52,10 +75,9 @@ export class AudioRecorder {
   }
 
   public playRecording() {
-    if (this.speech) {
+    if (this.speechUrl) {
       const audio = new Audio();
-      const speechUrl = URL.createObjectURL(this.speech);
-      audio.src = speechUrl;
+      audio.src = this.speechUrl;
       audio.play();
     } else {
       console.error("No recorded speech available.");

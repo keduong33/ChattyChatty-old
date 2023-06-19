@@ -26,8 +26,10 @@ export function TestPage() {
       </BlueButton>
 
       <BlueButton
-        onClick={() => {
+        onClick={async () => {
           audioRecorder.stopRecording();
+          // await new Promise((f) => setTimeout(f, 1000));
+          // console.log(audioRecorder.getSpeechURL());
         }}
       >
         End

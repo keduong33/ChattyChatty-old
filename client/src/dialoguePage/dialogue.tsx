@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "../providers/trpc";
 import ReactDropdown from "react-dropdown";
 import { allowedLanguages } from "../../../serverless/src/dialogue/chatbot/verifyLanguage";
 import "react-dropdown/style.css";
 import { BlueButton } from "../components/buttons";
+import { AudioRecorder } from "./speechToText/audioRecorder";
+
+const audioRecorder = new AudioRecorder();
 
 export function DialoguePage() {
+  const { mutate: submitText } = trpc.chatBot.submitUserText.useMutation();
+  const { mutate: submitVoiceRecording } =
+    trpc.speechToText.submitVoiceRecording.useMutation();
+
   const [userText, setUserText] = useState("");
-  const { mutate } = trpc.chatBot.submitUserText.useMutation();
   const [messageList, setMessageList] = useState<string[]>([]);
   const [language, setLanguage] = useState("");
   const [disabledChat, setDisabledChat] = useState(true);
+  const [disabledStopButton, setDisabledStopButton] = useState(true);
 
   function handleSelectButtonClick() {
     if (!language) {
@@ -28,7 +35,7 @@ export function DialoguePage() {
     }
 
     setMessageList((prevMessage) => [...prevMessage, userText]);
-    mutate(
+    submitText(
       { userText: userText, language: language },
       {
         onSuccess: (chatBotReply) => {
@@ -42,6 +49,38 @@ export function DialoguePage() {
         },
       }
     );
+  }
+
+  function handleStartRecordingButtonClick() {
+    setDisabledStopButton(false);
+    audioRecorder.startRecording();
+  }
+
+  async function handleStopRecordingButtonClick() {
+    setDisabledStopButton(true);
+    audioRecorder.stopRecording();
+
+    await new Promise((f) => setTimeout(f, 1000));
+    const speechURL = await audioRecorder.getSpeech();
+    console.log(speechURL);
+
+    if (speechURL) {
+      submitVoiceRecording(
+        { speechFile: speechURL, language: language },
+        {
+          onSuccess: (transcript) => {
+            if (transcript) {
+              console.log("transcript");
+            }
+          },
+          onError: (error) => {
+            console.log(error);
+          },
+        }
+      );
+    } else {
+      console.error("No speech found");
+    }
   }
 
   /* TODO: Add Language Picker (prolly a component itself) */
@@ -96,22 +135,16 @@ export function DialoguePage() {
         <button
           className="focus:shadow-outline mx-4 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
           type="button"
-          onClick={() => {
-            // handleOnClick();
-          }}
+          onClick={handleStartRecordingButtonClick}
         >
           Record
         </button>
-        <button
-          disabled
-          className="focus:shadow-outline max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none disabled:opacity-40"
-          type="button"
-          onClick={() => {
-            // handleOnClick();
-          }}
+        <BlueButton
+          disabled={disabledStopButton}
+          onClick={handleStopRecordingButtonClick}
         >
           Stop
-        </button>
+        </BlueButton>
       </div>
     </div>
 
