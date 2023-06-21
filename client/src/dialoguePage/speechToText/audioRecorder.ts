@@ -2,7 +2,7 @@ export class AudioRecorder {
   private mediaStream: MediaStream | undefined;
   private mediaRecorder: MediaRecorder | undefined;
   private recordedChunks: Blob[] = [];
-  private speech: Blob | undefined;
+  private speech: string | undefined;
   private speechUrl = "";
   // private text = "";
 
@@ -36,35 +36,15 @@ export class AudioRecorder {
     console.error("Error accessing microphone:", error);
   };
 
-  private saveSpeech() {
-    this.speech = new Blob(this.recordedChunks, { type: "audio/wav" });
-    this.saveSpeechURL();
+  private async saveSpeech() {
+    const blob = new Blob(this.recordedChunks, { type: "audio/wav" });
+    this.speech = await blobToBase64(blob);
+    this.speech = this.speech.substring("data:audio/wav;base64,".length);
     this.recordedChunks = []; //reset temporary chunks
   }
 
-  public saveSpeechURL() {
-    if (this.speech) {
-      this.speechUrl = URL.createObjectURL(this.speech);
-    }
-  }
-
-  private blobToFile = (theBlob: Blob, fileName: string): File => {
-    const b: any = theBlob;
-    //A Blob() is almost a File() - it's just missing the two properties below which we will add
-    b.lastModifiedDate = new Date();
-    b.name = fileName;
-
-    //Cast to a File() type
-    return b as File;
-  };
-
   public async getSpeech() {
-    const speech = await this.speech?.text();
-    return speech;
-  }
-
-  public getSpeechURL(): string {
-    return this.speechUrl;
+    return this.speech;
   }
 
   public stopRecording() {
@@ -83,4 +63,13 @@ export class AudioRecorder {
       console.error("No recorded speech available.");
     }
   }
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onerror = reject;
+    reader.onloadend = () => resolve(reader.result as string);
+  });
 }
