@@ -14,7 +14,4 @@ export const speechToTextRouter = router({
     .mutation((voice) =>
       convertSpeechToText(voice.input.speechData, voice.input.language)
     ),
-  // submitVoiceRecording: publicProcedure
-  //   .input(z.instanceof(Blob))
-  //   .mutation((voice) => "Hello"),
 });

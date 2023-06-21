@@ -1,7 +1,4 @@
-import { exec, execSync } from "child_process";
-// const file = "../severless/src/dialogue/chatbot/OpenAI/send/test.wav";
 import dotenv from "dotenv";
-import fs from "fs";
 import axios, { AxiosError } from "axios";
 
 export async function convertSpeechToText(
@@ -26,7 +23,7 @@ async function sendAudioToAPI(
       data,
       {
         headers: {
-          Authorization: `Bearer ${process.env.AUDIO_API_KEY}`,
+          Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
         },
       }
     );
@@ -39,11 +36,11 @@ async function sendAudioToAPI(
       error.response?.statusText == "Service Unavailable" &&
       retryCounter > 0
     ) {
-      console.log("I GOT HERE");
+      console.log("I GOT HERE!! DEBUG ME");
       setTimeout(() => {}, 20000);
       sendAudioToAPI(model, data, retryCounter - 1);
     }
-    return "FAILED";
+    return;
   }
 }
 
