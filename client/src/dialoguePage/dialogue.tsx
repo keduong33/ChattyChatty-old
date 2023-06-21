@@ -4,20 +4,14 @@ import ReactDropdown from "react-dropdown";
 import { allowedLanguages } from "../../../serverless/src/dialogue/chatbot/verifyLanguage";
 import "react-dropdown/style.css";
 import { BlueButton } from "../components/buttons";
-import { AudioRecorder } from "./speechToText/audioRecorder";
-
-const audioRecorder = new AudioRecorder();
+import { VoiceRecord } from "./speechToText/VoiceRecord";
 
 export function DialoguePage() {
   const { mutate: submitText } = trpc.chatBot.submitUserText.useMutation();
-  const { mutate: submitVoiceRecording } =
-    trpc.speechToText.submitVoiceRecording.useMutation();
-
   const [userText, setUserText] = useState("");
   const [messageList, setMessageList] = useState<string[]>([]);
   const [language, setLanguage] = useState("");
   const [disabledChat, setDisabledChat] = useState(true);
-  const [disabledStopButton, setDisabledStopButton] = useState(true);
 
   function handleSelectButtonClick() {
     if (!language) {
@@ -49,38 +43,6 @@ export function DialoguePage() {
         },
       }
     );
-  }
-
-  function handleStartRecordingButtonClick() {
-    setDisabledStopButton(false);
-    audioRecorder.startRecording();
-  }
-
-  async function handleStopRecordingButtonClick() {
-    setDisabledStopButton(true);
-    audioRecorder.stopRecording();
-
-    await new Promise((f) => setTimeout(f, 1000));
-    const speechURL = await audioRecorder.getSpeech();
-    console.log(speechURL);
-
-    if (speechURL) {
-      submitVoiceRecording(
-        { speechFile: speechURL, language: language },
-        {
-          onSuccess: (transcript) => {
-            if (transcript) {
-              console.log("transcript");
-            }
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    } else {
-      console.error("No speech found");
-    }
   }
 
   /* TODO: Add Language Picker (prolly a component itself) */
@@ -130,22 +92,7 @@ export function DialoguePage() {
         {messageList.length % 2 != 0 && <div>Bot Typing...</div>}
       </div>
 
-      {/*TODO: Setup voice recording*/}
-      <div title="Voice Record">
-        <button
-          className="focus:shadow-outline mx-4 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-          type="button"
-          onClick={handleStartRecordingButtonClick}
-        >
-          Record
-        </button>
-        <BlueButton
-          disabled={disabledStopButton}
-          onClick={handleStopRecordingButtonClick}
-        >
-          Stop
-        </BlueButton>
-      </div>
+      <VoiceRecord />
     </div>
 
     /* TODO: Uncomment this for a complete app */

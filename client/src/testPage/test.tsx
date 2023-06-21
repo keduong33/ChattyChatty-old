@@ -1,6 +1,6 @@
 declare const responsiveVoice: any;
 import { BlueButton } from "../components/buttons";
-import { AudioRecorder } from "../dialoguePage/speechToText/audioRecorder";
+import { AudioRecorder } from "../dialoguePage/speechToText/AudioRecorder";
 import { trpc } from "../providers/trpc";
 
 const audioRecorder = new AudioRecorder();
@@ -45,9 +45,7 @@ export function TestPage() {
 
       <BlueButton
         onClick={async () => {
-          await responsiveVoice.speak("Try connecting");
-          handleClick();
-          if (isSuccess) console.log(data);
+          // console.log(AXIOS_OPENAI_HEADER);
         }}
       >
         Test

@@ -1,17 +1,12 @@
+import { HTMLProps } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface buttonProps {
-  onClick: () => void;
-  className?: string;
-  disabled?: boolean;
-  children: React.ReactNode;
-}
 export const BlueButton = ({
   onClick,
   className,
   disabled = false,
   children,
-}: buttonProps) => {
+}: HTMLProps<HTMLButtonElement>) => {
   return (
     <button
       className={twMerge(
