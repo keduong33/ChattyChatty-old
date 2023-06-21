@@ -2,7 +2,7 @@ import { exec, execSync } from "child_process";
 // const file = "../severless/src/dialogue/chatbot/OpenAI/send/test.wav";
 import dotenv from "dotenv";
 import fs from "fs";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export async function convertSpeechToText(
   speechData: string,
@@ -11,9 +11,18 @@ export async function convertSpeechToText(
   const model = "openai/whisper-tiny";
   dotenv.config({ path: "../serverless/.env" });
   const data = base64ToArrayBuffer(speechData);
+  const result = await sendAudioToAPI(model, data);
+  return result["text"];
+}
+
+async function sendAudioToAPI(
+  model: string,
+  data: ArrayBuffer,
+  retryCounter = 3
+) {
   try {
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/openai/whisper-tiny",
+      `https://api-inference.huggingface.co/models/${model}`,
       data,
       {
         headers: {
@@ -21,9 +30,20 @@ export async function convertSpeechToText(
         },
       }
     );
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
+    return response.data;
+  } catch (e) {
+    const error = e as AxiosError;
+    console.error(error.response);
+    if (
+      error.response?.status == 503 &&
+      error.response?.statusText == "Service Unavailable" &&
+      retryCounter > 0
+    ) {
+      console.log("I GOT HERE");
+      setTimeout(() => {}, 20000);
+      sendAudioToAPI(model, data, retryCounter - 1);
+    }
+    return "FAILED";
   }
 }
 

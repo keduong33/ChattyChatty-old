@@ -3,10 +3,25 @@ import { BlueButton } from "../../components/buttons";
 import { trpc } from "../../providers/trpc";
 import { AudioRecorder } from "./AudioRecorder";
 import { z } from "zod";
+import { create } from "zustand";
 
 const audioRecorder = new AudioRecorder();
 
+interface TranscriptState {
+  transcript: string;
+  setTranscript: (newReply: string) => void;
+}
+
+export const useReplyState = create<TranscriptState>()((set) => ({
+  transcript: "",
+  setTranscript(newTranscript) {
+    set(() => ({ transcript: newTranscript }));
+  },
+}));
+
 export const VoiceRecord = () => {
+  const [setTranscript] = useReplyState((state) => [state.setTranscript]);
+
   const { mutate: submitVoiceRecording } =
     trpc.speechToText.submitVoiceRecording.useMutation();
   const [disabledStopButton, setDisabledStopButton] = useState(true);
@@ -29,7 +44,7 @@ export const VoiceRecord = () => {
         {
           onSuccess: (transcript) => {
             if (transcript) {
-              console.log("transcript");
+              setTranscript(transcript);
             }
           },
           onError: (error) => {
