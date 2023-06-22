@@ -10,7 +10,13 @@ interface DialogueState {
   setLanguage: (newLanguage: string) => void;
 
   messageList: string[];
-  setMessageList: (newMessage: string) => void;
+  addNewMessage: (newMessage: string) => void;
+
+  userMessageList: string[];
+  addNewUserMessage: (newMessage: string) => void;
+
+  botMessageList: string[];
+  addNewBotMessage: (newMessage: string) => void;
 }
 
 export const useDialogueState = create<DialogueState>()((set) => ({
@@ -29,7 +35,19 @@ export const useDialogueState = create<DialogueState>()((set) => ({
   },
 
   messageList: [],
-  setMessageList(newMessage) {
+  addNewMessage(newMessage) {
     set((state) => ({ messageList: [...state.messageList, newMessage] }));
+  },
+
+  userMessageList: [],
+  addNewUserMessage(newMessage: string) {
+    set((state) => ({
+      userMessageList: [...state.userMessageList, newMessage],
+    }));
+  },
+
+  botMessageList: [],
+  addNewBotMessage(newMessage: string) {
+    set((state) => ({ botMessageList: [...state.botMessageList, newMessage] }));
   },
 }));

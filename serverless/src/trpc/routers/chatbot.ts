@@ -8,9 +8,9 @@ import { sendUserInput } from "../../dialogue/chatbot/sendMessage";
 
 export const chatBotRouter = router({
   submitUserInput: publicProcedure
-    .input(z.object({ userInput: z.string(), language: z.string() }))
+    .input(z.object({ convoPayload: z.string(), language: z.string() }))
     .mutation((message) =>
-      sendUserInput(message.input.userInput, message.input.language)
+      sendUserInput(message.input.convoPayload, message.input.language)
     ),
   // submitInitialText: publicProcedure
   //   .input(z.string())

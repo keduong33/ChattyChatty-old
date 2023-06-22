@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import axios, { AxiosError } from "axios";
 
 type ApiResponse = {
@@ -11,12 +10,15 @@ export async function convertSpeechToText(
   language: string
 ) {
   const model = "openai/whisper-tiny";
-  dotenv.config({ path: "../serverless/.env" });
   const data = base64ToArrayBuffer(speechData);
-  const response = await sendAudioToAPI(model, data);
-  if (response.status == 200) return response.content;
-  // else throw Error("Cannot process Audio using API");
-  return;
+  console.log(process.env.HUGGINGFACE_API_KEY);
+  return "good";
+  // const response = await sendAudioToAPI(model, data);
+
+  // if (response.status == 200) return response.content;
+  // else if (response.status == 500)
+  //   throw Error("Cannot process Audio using API");
+  // throw Error(JSON.stringify(response));
 }
 
 async function sendAudioToAPI(
@@ -35,6 +37,7 @@ async function sendAudioToAPI(
     );
     return { status: 200, content: response.data["text"] };
   } catch (e) {
+    console.error(e);
     const error = e as AxiosError;
     return {
       status: error.response?.status,

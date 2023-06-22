@@ -3,14 +3,27 @@ import { trpc } from "../providers/trpc";
 import { useDialogueState } from "./DialogueState";
 
 export const UserInputForm = () => {
-  const [userInput, setUserInput, disabledChat, language, setMessageList] =
-    useDialogueState((state) => [
-      state.userInput,
-      state.setUserInput,
-      state.disabledChat,
-      state.language,
-      state.setMessageList,
-    ]);
+  const [
+    userInput,
+    setUserInput,
+    disabledChat,
+    language,
+    addNewMessage,
+    userMessageList,
+    addNewUserMessage,
+    botMessageList,
+    addNewBotMessage,
+  ] = useDialogueState((state) => [
+    state.userInput,
+    state.setUserInput,
+    state.disabledChat,
+    state.language,
+    state.addNewMessage,
+    state.userMessageList,
+    state.addNewUserMessage,
+    state.botMessageList,
+    state.addNewBotMessage,
+  ]);
 
   const { mutate: submitText } = trpc.chatBot.submitUserInput.useMutation();
 
@@ -19,23 +32,30 @@ export const UserInputForm = () => {
       console.error("You are not texting");
       return;
     }
-
-    setMessageList(userInput);
+    addNewMessage(userInput);
     sendUserInput(userInput, language);
   }
 
   function sendUserInput(userInput: string, language: string) {
+    const convoPayload: apiInput = createConvoPayload(
+      userMessageList,
+      botMessageList,
+      userInput
+    );
+
     submitText(
-      { userInput: userInput, language: language },
+      { convoPayload: JSON.stringify(convoPayload), language: language },
       {
         onSuccess: (chatBotReply) => {
           if (chatBotReply) {
-            setMessageList(chatBotReply);
+            addNewUserMessage(userInput);
+            addNewBotMessage(chatBotReply);
+            addNewMessage(chatBotReply);
             setUserInput("");
           } else console.error("There is no bot reply");
         },
         onError: async (error) => {
-          console.log(error);
+          console.error(error);
         },
       }
     );
@@ -59,4 +79,26 @@ export const UserInputForm = () => {
       </BlueButton>
     </div>
   );
+};
+
+type apiInput = {
+  input: {
+    past_user_inputs: string[];
+    generated_responses: string[];
+    text: string;
+  };
+};
+
+const createConvoPayload = (
+  userMessageList: string[],
+  botMessageList: string[],
+  userInput: string
+): apiInput => {
+  return {
+    input: {
+      past_user_inputs: userMessageList,
+      generated_responses: botMessageList,
+      text: userInput,
+    },
+  };
 };

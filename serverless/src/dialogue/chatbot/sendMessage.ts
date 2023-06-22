@@ -7,13 +7,13 @@ import { messageModel } from "./openAI/send/messageModel";
 import { createBotMessage } from "./openAI/send/botMessage";
 import { sendMessageToAI } from "./sendMessageToAI";
 
-export async function sendUserInput(userInput: string, language: string) {
+export async function sendUserInput(convoPayload: string, language: string) {
   if (!isValidLanguage(language)) {
     console.error("We not supporting this language");
     return;
   }
   try {
-    const botMessage = await sendMessageToAI(userInput, language);
+    const botMessage = await sendMessageToAI(convoPayload, language);
     if (botMessage) return botMessage;
     throw Error("Chatbot encountering problems");
   } catch (error) {

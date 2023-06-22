@@ -48,7 +48,7 @@ export const VoiceRecord = () => {
         onError: async (error) => {
           if (error.data?.httpStatus == 500 && retryCounter > 0) {
             console.error("Retry: #" + Math.abs(retryCounter - 3));
-            await new Promise((f) => setTimeout(f, 20000));
+            await new Promise((f) => setTimeout(f, 5000));
             submitVoice(speech, language, retryCounter - 1);
           } else {
             setUserInput("Try again");
