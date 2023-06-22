@@ -1,6 +1,11 @@
 import dotenv from "dotenv";
 import axios, { AxiosError } from "axios";
 
+type ApiResponse = {
+  status?: number;
+  content?: string;
+};
+
 export async function convertSpeechToText(
   speechData: string,
   language: string
@@ -8,15 +13,16 @@ export async function convertSpeechToText(
   const model = "openai/whisper-tiny";
   dotenv.config({ path: "../serverless/.env" });
   const data = base64ToArrayBuffer(speechData);
-  const result = await sendAudioToAPI(model, data);
-  return result["text"];
+  const response = await sendAudioToAPI(model, data);
+  if (response.status == 200) return response.content;
+  // else throw Error("Cannot process Audio using API");
+  return;
 }
 
 async function sendAudioToAPI(
   model: string,
-  data: ArrayBuffer,
-  retryCounter = 3
-) {
+  data: ArrayBuffer
+): Promise<ApiResponse> {
   try {
     const response = await axios.post(
       `https://api-inference.huggingface.co/models/${model}`,
@@ -27,20 +33,13 @@ async function sendAudioToAPI(
         },
       }
     );
-    return response.data;
+    return { status: 200, content: response.data["text"] };
   } catch (e) {
     const error = e as AxiosError;
-    console.error(error.response);
-    if (
-      error.response?.status == 503 &&
-      error.response?.statusText == "Service Unavailable" &&
-      retryCounter > 0
-    ) {
-      console.log("I GOT HERE!! DEBUG ME");
-      await new Promise((f) => setTimeout(f, 20000));
-      sendAudioToAPI(model, data, retryCounter - 1);
-    }
-    return;
+    return {
+      status: error.response?.status,
+      content: error.response?.statusText ?? "",
+    };
   }
 }
 

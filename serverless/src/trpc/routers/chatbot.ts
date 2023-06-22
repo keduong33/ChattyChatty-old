@@ -4,14 +4,15 @@ import {
   testChatBotReply,
   testInitialMessageReply,
 } from "../../dialogue/chatbot/openAI/send/test";
+import { sendUserInput } from "../../dialogue/chatbot/sendMessage";
 
 export const chatBotRouter = router({
-  submitUserText: publicProcedure
-    .input(z.object({ userText: z.string(), language: z.string() }))
+  submitUserInput: publicProcedure
+    .input(z.object({ userInput: z.string(), language: z.string() }))
     .mutation((message) =>
-      testChatBotReply(message.input.userText, message.input.language)
+      sendUserInput(message.input.userInput, message.input.language)
     ),
-  submitInitialText: publicProcedure
-    .input(z.string())
-    .mutation((language) => testInitialMessageReply(language.input)),
+  // submitInitialText: publicProcedure
+  //   .input(z.string())
+  //   .mutation((language) => testInitialMessageReply(language.input)),
 });

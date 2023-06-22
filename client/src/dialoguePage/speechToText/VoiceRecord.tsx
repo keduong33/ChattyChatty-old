@@ -40,19 +40,14 @@ export const VoiceRecord = () => {
       { speechData: speech, language: language },
       {
         onSuccess: (transcript) => {
+          console.log(transcript);
           if (transcript) {
             setUserInput(transcript);
           }
         },
         onError: async (error) => {
-          if (
-            error.data?.httpStatus == 500 &&
-            // error.message.includes(
-            //   `"errorMessage":"Task timed out after 10.00 seconds`
-            // ) &&
-            retryCounter > 0
-          ) {
-            console.error("Retry: #" + retryCounter);
+          if (error.data?.httpStatus == 500 && retryCounter > 0) {
+            console.error("Retry: #" + Math.abs(retryCounter - 3));
             await new Promise((f) => setTimeout(f, 20000));
             submitVoice(speech, language, retryCounter - 1);
           } else {

@@ -1,12 +1,6 @@
-import z, { ZodArray, ZodError } from "zod";
+import z from "zod";
 import { publicProcedure, router } from "../builder";
 import { convertSpeechToText } from "../../dialogue/speechToText/convertSpeechToText";
-
-const isBlob = z.custom<Blob>((value) => {
-  console.log(value);
-  console.log(value instanceof Blob);
-  return value instanceof Blob;
-});
 
 export const speechToTextRouter = router({
   submitVoiceRecording: publicProcedure

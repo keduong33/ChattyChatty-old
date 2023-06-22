@@ -5,17 +5,15 @@ import {
 import { isValidLanguage } from "./verifyLanguage";
 import { messageModel } from "./openAI/send/messageModel";
 import { createBotMessage } from "./openAI/send/botMessage";
+import { sendMessageToAI } from "./sendMessageToAI";
 
-export async function sendUserMessage(
-  userMessage: messageModel,
-  language: string
-) {
+export async function sendUserInput(userInput: string, language: string) {
   if (!isValidLanguage(language)) {
     console.error("We not supporting this language");
     return;
   }
   try {
-    const botMessage = await sendMessageToOpenAI(userMessage, language);
+    const botMessage = await sendMessageToAI(userInput, language);
     if (botMessage) return botMessage;
     throw Error("Chatbot encountering problems");
   } catch (error) {

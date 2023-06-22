@@ -24,34 +24,18 @@ export const UserInputForm = () => {
     sendUserInput(userInput, language);
   }
 
-  function sendUserInput(
-    userInput: string,
-    language: string,
-    retryCounter = 3
-  ) {
+  function sendUserInput(userInput: string, language: string) {
     submitText(
       { userInput: userInput, language: language },
       {
         onSuccess: (chatBotReply) => {
           if (chatBotReply) {
-            setMessageList(chatBotReply.content);
+            setMessageList(chatBotReply);
             setUserInput("");
           } else console.error("There is no bot reply");
         },
         onError: async (error) => {
-          if (
-            error.data?.httpStatus == 500 &&
-            // error.message.includes(
-            //   `"errorMessage":"Task timed out after 10.00 seconds`
-            // ) &&
-            retryCounter > 0
-          ) {
-            console.error("Retry: #" + retryCounter);
-            await new Promise((f) => setTimeout(f, 20000));
-            sendUserInput(userInput, language, retryCounter - 1);
-          } else {
-            setUserInput("Try again");
-          }
+          console.log(error);
         },
       }
     );
