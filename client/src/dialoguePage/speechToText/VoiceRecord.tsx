@@ -7,7 +7,11 @@ import { useDialogueState } from "../DialogueState";
 const audioRecorder = new AudioRecorder();
 
 export const VoiceRecord = () => {
-  const [setTranscript] = useDialogueState((state) => [state.setUserInput]);
+  const [setUserInput, disabledChat, language] = useDialogueState((state) => [
+    state.setUserInput,
+    state.disabledChat,
+    state.language,
+  ]);
 
   const { mutate: submitVoiceRecording } =
     trpc.speechToText.submitVoiceRecording.useMutation();
@@ -24,35 +28,49 @@ export const VoiceRecord = () => {
 
     await new Promise((f) => setTimeout(f, 1000));
     const speech = await audioRecorder.getSpeech();
-
     if (speech) {
-      submitVoiceRecording(
-        { speechData: speech, language: "English" },
-        {
-          onSuccess: (transcript) => {
-            if (transcript) {
-              setTranscript(transcript);
-            }
-          },
-          onError: (error) => {
-            console.error(error);
-          },
-        }
-      );
+      submitVoice(speech, language);
     } else {
       console.error("No speech found");
     }
   }
 
+  function submitVoice(speech: string, language: string, retryCounter = 3) {
+    submitVoiceRecording(
+      { speechData: speech, language: language },
+      {
+        onSuccess: (transcript) => {
+          if (transcript) {
+            setUserInput(transcript);
+          }
+        },
+        onError: async (error) => {
+          if (
+            error.data?.httpStatus == 500 &&
+            // error.message.includes(
+            //   `"errorMessage":"Task timed out after 10.00 seconds`
+            // ) &&
+            retryCounter > 0
+          ) {
+            console.error("Retry: #" + retryCounter);
+            await new Promise((f) => setTimeout(f, 20000));
+            submitVoice(speech, language, retryCounter - 1);
+          } else {
+            setUserInput("Try again");
+          }
+        },
+      }
+    );
+  }
+
   return (
     <div title="Voice Record">
-      <button
-        className="focus:shadow-outline mx-4 max-h-fit max-w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none"
-        type="button"
+      <BlueButton
         onClick={handleStartRecordingButtonClick}
+        disabled={disabledChat}
       >
         Record
-      </button>
+      </BlueButton>
       <BlueButton
         disabled={disabledStopButton}
         onClick={handleStopRecordingButtonClick}

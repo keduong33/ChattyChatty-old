@@ -37,7 +37,7 @@ async function sendAudioToAPI(
       retryCounter > 0
     ) {
       console.log("I GOT HERE!! DEBUG ME");
-      setTimeout(() => {}, 20000);
+      await new Promise((f) => setTimeout(f, 20000));
       sendAudioToAPI(model, data, retryCounter - 1);
     }
     return;
