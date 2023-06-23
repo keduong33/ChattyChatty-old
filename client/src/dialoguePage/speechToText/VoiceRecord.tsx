@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BlueButton } from "../../components/buttons";
 import { trpc } from "../../providers/trpc";
-import { AudioRecorder } from "./audioRecorder";
+import { AudioRecorder } from "./AudioRecorder";
 import { useDialogueState } from "../DialogueState";
 
 const audioRecorder = new AudioRecorder();
