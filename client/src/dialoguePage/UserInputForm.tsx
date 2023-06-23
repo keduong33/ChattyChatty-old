@@ -60,8 +60,11 @@ export const UserInputForm = () => {
               addNewMessage(chatBotReply);
               responsiveVoice.speak(chatBotReply, "UK English Male");
               setUserInput("");
+            } else {
+              console.error("No reply");
             }
           } else if (response.status == 500 && retryCounter > 0) {
+            console.error("Retry: #" + Math.abs(retryCounter - 3));
             sendUserInput(userInput, language, retryCounter - 1);
           }
         },
