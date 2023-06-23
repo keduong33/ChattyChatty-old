@@ -1,6 +1,7 @@
 import { BlueButton } from "../components/buttons";
 import { trpc } from "../providers/trpc";
 import { useDialogueState } from "./DialogueState";
+declare const responsiveVoice: any;
 
 export const UserInputForm = () => {
   const [
@@ -51,6 +52,7 @@ export const UserInputForm = () => {
             addNewUserMessage(userInput);
             addNewBotMessage(chatBotReply);
             addNewMessage(chatBotReply);
+            responsiveVoice.speak(chatBotReply, "UK English Male");
             setUserInput("");
           } else console.error("There is no bot reply");
         },
@@ -82,7 +84,7 @@ export const UserInputForm = () => {
 };
 
 type apiInput = {
-  input: {
+  inputs: {
     past_user_inputs: string[];
     generated_responses: string[];
     text: string;
@@ -95,7 +97,7 @@ const createConvoPayload = (
   userInput: string
 ): apiInput => {
   return {
-    input: {
+    inputs: {
       past_user_inputs: userMessageList,
       generated_responses: botMessageList,
       text: userInput,
