@@ -24,6 +24,7 @@ async function sendAudioToAPI(
       `https://api-inference.huggingface.co/models/${model}`,
       data,
       {
+        timeout: 9000,
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
         },

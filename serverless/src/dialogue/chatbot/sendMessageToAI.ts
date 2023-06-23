@@ -11,6 +11,7 @@ export const sendMessageToAI = async (
       `https://api-inference.huggingface.co/models/${model}`,
       convoPayload,
       {
+        timeout: 9000,
         headers: {
           Authorization: `Bearer ${process.env.HUGGINGFACE_API_KEY}`,
         },
