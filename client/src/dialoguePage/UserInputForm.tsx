@@ -37,7 +37,11 @@ export const UserInputForm = () => {
     sendUserInput(userInput, language);
   }
 
-  function sendUserInput(userInput: string, language: string) {
+  function sendUserInput(
+    userInput: string,
+    language: string,
+    retryCounter = 3
+  ) {
     const convoPayload: apiInput = createConvoPayload(
       userMessageList,
       botMessageList,
@@ -47,16 +51,21 @@ export const UserInputForm = () => {
     submitText(
       { convoPayload: JSON.stringify(convoPayload), language: language },
       {
-        onSuccess: (chatBotReply) => {
-          if (chatBotReply) {
-            addNewUserMessage(userInput);
-            addNewBotMessage(chatBotReply);
-            addNewMessage(chatBotReply);
-            responsiveVoice.speak(chatBotReply, "UK English Male");
-            setUserInput("");
-          } else console.error("There is no bot reply");
+        onSuccess: async (response) => {
+          if (response.status == 200) {
+            const chatBotReply = response.content;
+            if (chatBotReply) {
+              addNewUserMessage(userInput);
+              addNewBotMessage(chatBotReply);
+              addNewMessage(chatBotReply);
+              responsiveVoice.speak(chatBotReply, "UK English Male");
+              setUserInput("");
+            }
+          } else if (response.status == 500 && retryCounter > 0) {
+            sendUserInput(userInput, language, retryCounter - 1);
+          }
         },
-        onError: async (error) => {
+        onError: (error) => {
           console.error(error);
         },
       }

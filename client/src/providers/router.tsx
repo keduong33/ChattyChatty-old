@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import { IndexPage } from "../indexPage/index";
 import { DialoguePage } from "../dialoguePage/dialogue";
-import { TestPage } from "../testPage/test";
 
 const router = createBrowserRouter([
   {
@@ -15,10 +14,6 @@ const router = createBrowserRouter([
   {
     path: "/dialogue",
     element: <DialoguePage />,
-  },
-  {
-    path: "/test",
-    element: <TestPage />,
   },
 ]);
 

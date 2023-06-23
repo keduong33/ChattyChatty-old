@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 
-type ApiResponse = {
-  status?: number;
-  content?: string;
+export type ApiResponse = {
+  status: number;
+  content: string;
 };
 
 export async function convertSpeechToText(
@@ -11,14 +11,8 @@ export async function convertSpeechToText(
 ) {
   const model = "openai/whisper-tiny";
   const data = base64ToArrayBuffer(speechData);
-  console.log(process.env.HUGGINGFACE_API_KEY);
-  return "good";
-  // const response = await sendAudioToAPI(model, data);
-
-  // if (response.status == 200) return response.content;
-  // else if (response.status == 500)
-  //   throw Error("Cannot process Audio using API");
-  // throw Error(JSON.stringify(response));
+  const response = await sendAudioToAPI(model, data);
+  return response;
 }
 
 async function sendAudioToAPI(
@@ -40,7 +34,7 @@ async function sendAudioToAPI(
     console.error(e);
     const error = e as AxiosError;
     return {
-      status: error.response?.status,
+      status: error.response?.status ?? 500,
       content: error.response?.statusText ?? "",
     };
   }
