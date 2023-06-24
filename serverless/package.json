@@ -5,7 +5,7 @@
   "author": "David & Jason",
   "license": "ISC",
   "engines": {
-    "node": ">=20.2.0"
+    "node": ">=18"
   },
   "scripts": {
     "dev": "tsx watch src/",

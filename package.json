@@ -7,9 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cd ./client && npm run build:netlify",
     "deploy:dev":"cd ./client && npm run deploy:dev",
-    "deploy:prod":"cd ./client && npm run deploy:prod"
+    "deploy:prod":"cd ./client && npm run deploy:prod",
+    "setup:deps":"npm install netlify-cli -g  && cd ./client && npm i && cd ../serverless && npm i"
   },
     "engines": {
-      "node": ">=20.2.0"
+      "node": ">=18"
     }
 }
