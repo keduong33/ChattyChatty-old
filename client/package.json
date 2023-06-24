@@ -12,7 +12,7 @@
   "scripts": {
     "dev:netlify": "netlify dev",
     "dev": "vite",
-    "prebuild": "cd ../serverless && npm i",
+    "prebuild": "npm i && cd ../serverless && npm i",
     "build": "tsc && vite build",
     "build:netlify": "netlify build",
     "deploy:dev": "netlify deploy --alias=dev",

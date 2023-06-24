@@ -11,13 +11,14 @@ export async function convertSpeechToText(
 ) {
   const model = "openai/whisper-tiny";
   const data = base64ToArrayBuffer(speechData);
-  const response = await sendAudioToAPI(model, data);
+  const response = await sendAudioToAPI(model, data, language);
   return response;
 }
 
 async function sendAudioToAPI(
   model: string,
-  data: ArrayBuffer
+  data: ArrayBuffer,
+  language?: string
 ): Promise<ApiResponse> {
   try {
     const response = await axios.post(
@@ -33,6 +34,7 @@ async function sendAudioToAPI(
     return { status: 200, content: response.data["text"] };
   } catch (e) {
     console.error(e);
+    console.error(language);
     const error = e as AxiosError;
     return {
       status: error.response?.status ?? 500,
