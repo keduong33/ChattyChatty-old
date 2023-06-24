@@ -65,6 +65,7 @@ export const UserInputForm = () => {
             }
           } else if (response.status == 500 && retryCounter > 0) {
             console.error("Retry: #" + Math.abs(retryCounter - 3));
+            await new Promise((f) => setTimeout(f, 5000));
             sendUserInput(userInput, language, retryCounter - 1);
           }
         },
