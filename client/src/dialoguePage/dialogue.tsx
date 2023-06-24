@@ -1,5 +1,5 @@
 import "react-dropdown/style.css";
-import { VoiceRecord } from "./speechToText/VoiceRecord";
+import { SpeechToText } from "./speechToText/SpeechToText";
 import { LanguagePicker } from "./LanguagePicker";
 
 import { MessageList } from "./MessageList";
@@ -18,19 +18,7 @@ export function DialoguePage() {
 
       <MessageList />
 
-      <VoiceRecord />
+      <SpeechToText />
     </div>
-
-    /* TODO: Uncomment this for a complete app */
-    /* TODO: Add AISpeak to the initial Message */
-    // window.onload = async () => {
-    //   setLoading(true);
-    //   const aiMessage = await sendInitialMessage(language);
-    //   if (aiMessage) {
-    //     speak(aiMessage.content, language);
-    //     setMessageList([aiMessage]);
-    //   } else console.log("Uh oh something bad");
-    //   setLoading(false);
-    // };
   );
 }

@@ -7,8 +7,8 @@ export const MessageList = () => {
       {messageList.map((message, i) => (
         <div key={i}>
           <div>
-            {i % 2 == 0 && i != 0 && "Bot: "}
-            {(i % 2 != 0 || i == 0) && "Human: "}
+            {i % 2 != 0 && i != 0 && "Bot: "}
+            {i % 2 == 0 && "Human: "}
             {message}
           </div>
         </div>

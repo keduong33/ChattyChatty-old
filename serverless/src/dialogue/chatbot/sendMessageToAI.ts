@@ -5,7 +5,17 @@ export const sendMessageToAI = async (
   convoPayload: string,
   language: string
 ): Promise<ApiResponse> => {
-  const model = "facebook/blenderbot-400M-distill";
+  let model;
+  switch (language.toLowerCase()) {
+    case "german":
+      model = "";
+      break;
+
+    default:
+      model = "facebook/blenderbot-400M-distill";
+      break;
+  }
+
   try {
     const response = await axios.post(
       `https://api-inference.huggingface.co/models/${model}`,

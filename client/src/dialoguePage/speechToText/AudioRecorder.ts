@@ -4,7 +4,6 @@ export class AudioRecorder {
   private recordedChunks: Blob[] = [];
   private speech: string | undefined;
   private speechUrl = "";
-  // private text = "";
 
   public startRecording() {
     navigator.mediaDevices

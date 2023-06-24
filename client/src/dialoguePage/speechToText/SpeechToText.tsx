@@ -6,7 +6,7 @@ import { useDialogueState } from "../DialogueState";
 
 const audioRecorder = new AudioRecorder();
 
-export const VoiceRecord = () => {
+export const SpeechToText = () => {
   const [setUserInput, disabledChat, language] = useDialogueState((state) => [
     state.setUserInput,
     state.disabledChat,
