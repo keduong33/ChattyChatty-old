@@ -33,6 +33,7 @@ export const MessageList = () => {
               console.error("No correction");
             }
           } else if (response.status == 500 && retryCounter > 0) {
+            await new Promise((f) => setTimeout(f, 5000));
             console.error("Retry: #" + Math.abs(retryCounter - 3));
             sendUserInput(userInput, language, retryCounter - 1);
           }
