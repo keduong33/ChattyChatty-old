@@ -1,6 +1,6 @@
 # Chatty Chatty
 
-This is a repo for a friendly chatty chatty bot. One of my first completed full stack application so there should be a few mistakes or inefficient coding!
+This is a repo for a friendly chatty chatty bot. One of my first completed full stack applications so there should be a few mistakes or inefficient coding!
 
 ## Important Notes
 

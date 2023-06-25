@@ -4,6 +4,6 @@
 
 ### Environment variables setup
 
-Create an .env in the server repo and supply `API_KEY` from HuggingFace
+Create an .env in the server repo --> Keep the soft link
 
 `cp .env.sample .env`

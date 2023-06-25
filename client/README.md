@@ -2,12 +2,18 @@
 
 `npm install`
 
+### Environment variables setup
+
+Create an .env in the server repo and supply `API_KEY` from HuggingFace
+
+`cp .env.sample .env`
+
 ## Usage
 
-### Run Locally
+### Run Locally (front end only)
 
 `npm run dev`
 
-### Build
+### Run locally (backend also)
 
-`npm run build`
+`npm run dev:netlify`
