@@ -40,7 +40,7 @@ export const UserInputForm = () => {
   function sendUserInput(
     userInput: string,
     language: string,
-    retryCounter = 3
+    retryCounter = 5
   ) {
     const convoPayload: apiInput = createConvoPayload(
       userMessageList,
@@ -65,8 +65,10 @@ export const UserInputForm = () => {
             }
           } else if (!response.isSuccess && retryCounter > 0) {
             await new Promise((f) => setTimeout(f, 5000));
-            console.error("Retry: #" + Math.abs(retryCounter - 3));
+            console.error("Retry: #" + Math.abs(retryCounter - 4));
             sendUserInput(userInput, language, retryCounter - 1);
+          } else {
+            setUserInput("Try sending your message again");
           }
         },
         onError: (error) => {

@@ -35,7 +35,7 @@ export const SpeechToText = () => {
     }
   }
 
-  function submitVoice(speech: string, language: string, retryCounter = 3) {
+  function submitVoice(speech: string, language: string, retryCounter = 5) {
     submitVoiceRecording(
       { speechData: speech, language: language },
       {
@@ -48,9 +48,11 @@ export const SpeechToText = () => {
               console.error(`Cannot transcribe user's voice`);
             }
           } else if (!response.isSuccess && retryCounter > 0) {
-            console.error("Retry: #" + Math.abs(retryCounter - 3));
+            console.error("Retry: #" + Math.abs(retryCounter - 4));
             await new Promise((f) => setTimeout(f, 5000));
             submitVoice(speech, language, retryCounter - 1);
+          } else {
+            return setUserInput("Try voice recording again");
           }
         },
         onError: async (error) => {

@@ -13,8 +13,15 @@ export function DialoguePage() {
       </div>
 
       <div className="">
-        <b>Disclaimer:</b> First time sending the text or recording your voice,
-        the servers (HuggingFace will be a bit slow)
+        <b>Disclaimer:</b>
+        <p>
+          First time sending the text or recording your voice, the servers
+          (HuggingFace will be a bit slow)
+        </p>
+        <p>
+          This app is just a proof of concept/MVP for our language partner
+          chatbot
+        </p>
       </div>
 
       <LanguagePicker />

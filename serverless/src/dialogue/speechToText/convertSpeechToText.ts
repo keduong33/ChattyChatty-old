@@ -34,6 +34,7 @@ async function sendAudioToAPI(
     return { isSuccess: true, content: response.data["text"] };
   } catch (e) {
     console.error(e);
+    console.log(language);
     const error = e as AxiosError;
     return {
       isSuccess: false,
