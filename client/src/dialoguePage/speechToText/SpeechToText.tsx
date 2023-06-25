@@ -40,9 +40,14 @@ export const SpeechToText = () => {
       { speechData: speech, language: language },
       {
         onSuccess: async (response) => {
-          if (response.status == 200 && response.content) {
-            setUserInput(response.content);
-          } else if (response.status == 500 && retryCounter > 0) {
+          if (response.isSuccess) {
+            const userVoice = response.content;
+            if (userVoice) {
+              setUserInput(response.content);
+            } else {
+              console.error(`Cannot transcribe user's voice`);
+            }
+          } else if (!response.isSuccess && retryCounter > 0) {
             console.error("Retry: #" + Math.abs(retryCounter - 3));
             await new Promise((f) => setTimeout(f, 5000));
             submitVoice(speech, language, retryCounter - 1);

@@ -52,7 +52,7 @@ export const UserInputForm = () => {
       { convoPayload: JSON.stringify(convoPayload), language: language },
       {
         onSuccess: async (response) => {
-          if (response.status == 200) {
+          if (response.isSuccess) {
             const chatBotReply = response.content;
             if (chatBotReply) {
               addNewUserMessage(userInput);
@@ -63,7 +63,7 @@ export const UserInputForm = () => {
             } else {
               console.error("No reply");
             }
-          } else if (response.status == 500 && retryCounter > 0) {
+          } else if (!response.isSuccess && retryCounter > 0) {
             await new Promise((f) => setTimeout(f, 5000));
             console.error("Retry: #" + Math.abs(retryCounter - 3));
             sendUserInput(userInput, language, retryCounter - 1);

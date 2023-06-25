@@ -2,7 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider as RRProvider,
 } from "react-router-dom";
-import { DialoguePage } from "../dialoguePage/dialogue";
+import { DialoguePage } from "../dialoguePage/test";
 
 const router = createBrowserRouter([
   {

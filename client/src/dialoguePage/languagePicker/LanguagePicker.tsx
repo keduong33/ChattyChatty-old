@@ -1,7 +1,7 @@
 import ReactDropdown from "react-dropdown";
-import { allowedLanguages } from "../../../serverless/src/dialogue/chatbot/verifyLanguage";
-import { BlueButton } from "../components/buttons";
-import { useDialogueState } from "./DialogueState";
+import { allowedLanguages } from "../../../../serverless/src/dialogue/chatbot/verifyLanguage";
+import { BlueButton } from "../../components/buttons";
+import { useDialogueState } from "../DialogueState";
 
 export const LanguagePicker = () => {
   const [setDisabledChat, language, setLanguage] = useDialogueState((state) => [

@@ -28,14 +28,15 @@ export const sendMessageToAI = async (
       }
     );
     return {
-      status: response.status,
+      isSuccess: true,
       content: response.data["generated_text"],
     };
   } catch (e) {
     const error = e as AxiosError;
+    console.error(e);
     return {
-      status: error.response?.status ?? 500,
-      content: error.response?.statusText ?? "",
+      isSuccess: false,
+      content: error.response?.statusText ?? JSON.stringify(e),
     };
   }
 };

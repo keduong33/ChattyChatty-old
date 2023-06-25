@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 
 export type ApiResponse = {
-  status: number;
+  isSuccess: boolean;
   content: string;
 };
 
@@ -31,14 +31,13 @@ async function sendAudioToAPI(
         },
       }
     );
-    return { status: 200, content: response.data["text"] };
+    return { isSuccess: true, content: response.data["text"] };
   } catch (e) {
     console.error(e);
-    console.error(language);
     const error = e as AxiosError;
     return {
-      status: error.response?.status ?? 500,
-      content: error.response?.statusText ?? "",
+      isSuccess: false,
+      content: error.response?.statusText ?? JSON.stringify(e),
     };
   }
 }

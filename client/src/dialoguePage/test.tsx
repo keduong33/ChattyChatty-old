@@ -1,6 +1,6 @@
 import "react-dropdown/style.css";
 import { SpeechToText } from "./speechToText/SpeechToText";
-import { LanguagePicker } from "./LanguagePicker";
+import { LanguagePicker } from "./languagePicker/LanguagePicker";
 
 import { MessageList } from "./MessageList";
 import { UserInputForm } from "./UserInputForm";
