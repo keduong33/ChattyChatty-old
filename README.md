@@ -34,3 +34,12 @@ OR
 * Responsive Voice: [License](https://responsivevoice.org/license/)
 * Mozilla Public License : [License](https://www.mozilla.org/en-US/MPL/)
 * HuggingFace
+
+## Tech/Tools used
+
+* TS + ReactJS
+* Vite
+* tRPC
+* Netlify functions
+* React Query
+* HuggingFace API Inference
