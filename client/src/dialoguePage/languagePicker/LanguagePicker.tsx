@@ -18,12 +18,12 @@ export const LanguagePicker = () => {
     setDisabledChat(false);
   }
   return (
-    <div title="Language Drop Down" className="mb-4 flex">
-      <div className="mr-2 flex items-center">Language:</div>
+    <div title="Language Drop Down" className="mb-4 flex w-[300px] sm:w-fit">
+      <div className="mr-2 flex items-center">Select Language:</div>
       <ReactDropdown
         className="w-48"
         options={allowedLanguages}
-        placeholder={"Select language"}
+        placeholder={"Language"}
         value={language}
         onChange={(option) => {
           setLanguage(option.value);
