@@ -88,7 +88,7 @@ export const UserInputForm = ({
   return (
     <div title="User Input Form" className="mb-2 flex items-center ">
       <textarea
-        className="focus:shadow-outline w-96 appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none disabled:bg-gray-600"
+        className="focus:shadow-outline w-[200px] appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none disabled:bg-gray-600 sm:w-96"
         id="prompt"
         value={userInput}
         onChange={(event) => setUserInput(event.target.value)}

@@ -62,12 +62,15 @@ export const MessageList = ({
   }
 
   return (
-    <div title="Messages List" className="mb-2 flex max-w-[700px] flex-col">
+    <div
+      title="Messages List"
+      className="mb-2 flex w-[300px] flex-col sm:w-[700px]"
+    >
       <div className="mb-4">
         {messageList.map((message, i) => (
           <div key={i}>
             <div>
-              {i % 2 != 0 && i != 0 && "Bot: "}
+              {i % 2 != 0 && "Bot: "}
               {i % 2 == 0 && "Human: "}
               {message}
             </div>

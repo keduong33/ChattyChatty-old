@@ -14,7 +14,7 @@ export function DialoguePage() {
       <div className="flex h-16 w-full justify-end">
         {toastOn && <Toast setToastOn={setToastOn} />}
       </div>
-      <div className="m-auto flex max-w-[700px] flex-col items-center">
+      <div className="sm:w-700px m-auto flex w-[300px] flex-col items-center">
         <div title="Page Title" className="flex text-4xl text-red-600">
           Chatbot!
         </div>
@@ -44,7 +44,7 @@ export function DialoguePage() {
           </ul>
         </div>
 
-        <div className="flex flex-col items-center border-[4px] p-8">
+        <div className="flex flex-col items-center border-[4px] p-4 sm:p-8">
           <LanguagePicker />
 
           <UserInputForm setToastOn={setToastOn} />
