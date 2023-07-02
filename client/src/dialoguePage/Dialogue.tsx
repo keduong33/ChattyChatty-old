@@ -4,33 +4,56 @@ import { LanguagePicker } from "./languagePicker/LanguagePicker";
 
 import { MessageList } from "./MessageList";
 import { UserInputForm } from "./UserInputForm";
+import { useState } from "react";
+import { Toast } from "../components/toast";
 
 export function DialoguePage() {
+  const [toastOn, setToastOn] = useState(false);
   return (
-    <div className="max-w-sm">
-      <div title="Page Title" className="text-4xl text-red-600">
-        Chatbot!
+    <div className="flex w-full flex-col">
+      <div className="flex h-16 w-full justify-end">
+        {toastOn && <Toast setToastOn={setToastOn} />}
       </div>
+      <div className="m-auto flex max-w-[700px] flex-col items-center">
+        <div title="Page Title" className="flex text-4xl text-red-600">
+          Chatbot!
+        </div>
 
-      <div className="">
-        <b>Disclaimer:</b>
-        <p>
-          First time sending the text or recording your voice, the servers
-          (HuggingFace will be a bit slow)
-        </p>
-        <p>
-          This app is just a proof of concept/MVP for our language partner
-          chatbot
-        </p>
+        <div className="mb-10">
+          <b>Notes:</b>
+          <ul className="list-disc">
+            <li>
+              First time sending the text, recording your voice or checking
+              grammars, the HuggingFace servers will be slow. It will request
+              the retry of action if necessary!
+            </li>
+            <li>
+              This app is just a proof of concept/MVP for our language partner
+              chatbot so not much UI design and only supports English
+            </li>
+            <li>
+              If you wanna learn more about this idea, check out my friend's
+              blog:
+              <a
+                href="https://jason-siu-portfolio.vercel.app/article/chattychatty"
+                className="ml-1 text-blue-600 underline hover:text-blue-800"
+              >
+                Link
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="flex flex-col items-center border-[4px] p-8">
+          <LanguagePicker />
+
+          <UserInputForm setToastOn={setToastOn} />
+
+          <MessageList setToastOn={setToastOn} />
+
+          <SpeechToText setToastOn={setToastOn} />
+        </div>
       </div>
-
-      <LanguagePicker />
-
-      <UserInputForm />
-
-      <MessageList />
-
-      <SpeechToText />
     </div>
   );
 }

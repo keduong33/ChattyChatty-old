@@ -6,7 +6,11 @@ import { useDialogueState } from "../DialogueState";
 
 const audioRecorder = new AudioRecorder();
 
-export const SpeechToText = () => {
+export const SpeechToText = ({
+  setToastOn,
+}: {
+  setToastOn: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [setUserInput, disabledChat, language] = useDialogueState((state) => [
     state.setUserInput,
     state.disabledChat,
@@ -52,7 +56,10 @@ export const SpeechToText = () => {
             await new Promise((f) => setTimeout(f, 5000));
             submitVoice(speech, language, retryCounter - 1);
           } else {
-            return setUserInput("Try voice recording again");
+            setToastOn(true);
+            setTimeout(() => {
+              setToastOn(false);
+            }, 5000);
           }
         },
         onError: async (error) => {

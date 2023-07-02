@@ -3,7 +3,11 @@ import { trpc } from "../providers/trpc";
 import { useDialogueState } from "./DialogueState";
 declare const responsiveVoice: any;
 
-export const UserInputForm = () => {
+export const UserInputForm = ({
+  setToastOn,
+}: {
+  setToastOn: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [
     userInput,
     setUserInput,
@@ -68,7 +72,10 @@ export const UserInputForm = () => {
             console.error("Retry: #" + Math.abs(retryCounter - 4));
             sendUserInput(userInput, language, retryCounter - 1);
           } else {
-            setUserInput("Try sending your message again");
+            setToastOn(true);
+            setTimeout(() => {
+              setToastOn(false);
+            }, 5000);
           }
         },
         onError: (error) => {

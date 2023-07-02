@@ -1,28 +1,37 @@
+import { useState } from "react";
 import { BlueButton } from "../components/buttons";
 import { trpc } from "../providers/trpc";
 import { useDialogueState } from "./DialogueState";
 
-export const MessageList = () => {
-  const [messageList, userInput, language] = useDialogueState((state) => [
+export const MessageList = ({
+  setToastOn,
+}: {
+  setToastOn: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [grammarFix, setGrammarFix] = useState("");
+  const [messageList, language, userMessageList] = useDialogueState((state) => [
     state.messageList,
-    state.userInput,
     state.language,
+    state.userMessageList,
   ]);
   const { mutateAsync: sendUserGrammar } =
     trpc.grammarCorrection.submitUserGrammar.useMutation();
 
   const handleGrammarCorrection = async () => {
-    const formattedInput = checkPunctuation(userInput);
+    const formattedInput = checkPunctuation(
+      userMessageList[userMessageList.length - 1]
+    );
     const correctedGrammar = await sendUserInput(formattedInput, language);
-    console.log(correctedGrammar);
+    setGrammarFix(correctedGrammar);
   };
 
   async function sendUserInput(
     userInput: string,
     language: string,
-    retryCounter = 5
+    retryCounter = -1
   ): Promise<string> {
     let correctedText = "";
+    console.log(retryCounter);
     await sendUserGrammar(
       { userInput: userInput, language: language },
       {
@@ -34,8 +43,14 @@ export const MessageList = () => {
             }
           } else if (!response.isSuccess && retryCounter > 0) {
             await new Promise((f) => setTimeout(f, 5000));
-            console.error("Retry: #" + Math.abs(retryCounter - 4));
+            console.error("Retry: #" + Math.abs(retryCounter - 5));
             sendUserInput(userInput, language, retryCounter - 1);
+          } else {
+            console.log("Set toast");
+            setToastOn(true);
+            setTimeout(() => {
+              setToastOn(false);
+            }, 5000);
           }
         },
         onError: (error) => {
@@ -47,20 +62,34 @@ export const MessageList = () => {
   }
 
   return (
-    <div title="Messages List" className="mb-2">
-      {messageList.map((message, i) => (
-        <div key={i}>
-          <div>
-            {i % 2 != 0 && i != 0 && "Bot: "}
-            {i % 2 == 0 && "Human: "}
-            {message}
+    <div title="Messages List" className="mb-2 flex max-w-[700px] flex-col">
+      <div className="mb-4">
+        {messageList.map((message, i) => (
+          <div key={i}>
+            <div>
+              {i % 2 != 0 && i != 0 && "Bot: "}
+              {i % 2 == 0 && "Human: "}
+              {message}
+            </div>
           </div>
-        </div>
-      ))}
-      {/* Maybe find a better way but rn check if there has not been a response --> messageList length is odd */}
-      {messageList.length % 2 != 0 && <div>Bot Typing...</div>}
+        ))}
+        {/* Maybe find a better way but rn check if there has not been a response --> messageList length is odd */}
+        {messageList.length % 2 != 0 && <div>Bot Typing...</div>}
+      </div>
 
-      <BlueButton onClick={handleGrammarCorrection}>Check Grammar</BlueButton>
+      <div className="mx-auto">
+        {grammarFix && (
+          <p>
+            {userMessageList[userMessageList.length - 1]} &#10140; {grammarFix}{" "}
+          </p>
+        )}
+        <BlueButton
+          onClick={handleGrammarCorrection}
+          disabled={userMessageList.length == 0}
+        >
+          Check Grammar of the last sent message
+        </BlueButton>
+      </div>
     </div>
   );
 };
