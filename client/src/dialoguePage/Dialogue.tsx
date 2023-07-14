@@ -32,6 +32,12 @@ export function DialoguePage() {
               This app is just a proof of concept/MVP for our language partner
               chatbot so not much UI design and only supports English
             </li>
+
+            <br />
+            <li>
+              The conversational and grammar checking models are quite basic so
+              they could be repetitive or not perform well.
+            </li>
             <br />
             <li>
               If you wanna learn more about this idea, check out my friend's
